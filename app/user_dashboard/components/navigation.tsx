@@ -5,16 +5,61 @@ import Add_script_button from "./add_script_button";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { CiLogout } from "react-icons/ci";
+import { MdOutlineAccountCircle } from "react-icons/md";
+
+
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import src from "../../../lib/logo.png";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+
+
+
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   function openModal() {
     setIsOpen(!isOpen);
   }
-  console.log(isOpen);
+  const router = useRouter()
+
+  const { 
+    data: session, 
+    isPending, //loading state
+    error, //error object
+    refetch //refetch the session
+} = authClient.useSession() 
+
+async function LogoutUser () {
+   await authClient.signOut({
+    fetchOptions:{
+      onSuccess:()=>{
+        router.push("/auth/sign-up")
+
+      }
+    }
+   }
+  
+   );
+   
+}
+console.log(session)
   return (
     <div
       id="navbar_dashboard"
@@ -26,11 +71,28 @@ const Navigation = () => {
           Callia
         </h1>
       </div>
-      <div id="tablet-menu" className=" flex justify-end h-full w-1/5">
-        <button
+      <div id="tablet-menu" className=" items-center flex justify-end h-full w-1/5">
+      <DropdownMenu>
+      <DropdownMenuTrigger className=" border-none bg-indigo-500 cursor-pointer text-white rounded-md h-[60%] min-w-[79px] ">
+     
+       
+      
+        
+       
+        {session?.user.name}
+        
+   
+      </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem onClick={LogoutUser}>  <CiLogout  />Logout</DropdownMenuItem>
+          <DropdownMenuItem><MdOutlineAccountCircle />
+          Information</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+        <Button
           typeof=""
           onClick={openModal}
-          className=" cursor-pointer h-full md:hidden w-14 flex justify-center items-center mr-2"
+          className=" cursor-pointer h-full md:hidden w-14 flex justify-center bg-gray-white hover:bg-gray-400 text-black items-center mr-2"
           title="toggle"
         >
           <svg
@@ -44,7 +106,7 @@ const Navigation = () => {
               fill="currentColor"
             />
           </svg>
-        </button>
+        </Button>
       </div>
 
       <AnimatePresence>{isOpen && <Hidden_menu isOpen={isOpen} />}</AnimatePresence>
@@ -55,7 +117,7 @@ const Navigation = () => {
       >
         <Link
           className="hover:bg-[hsl(0,0%,95%)] flex items-center rounded-md   w-24 h-14  font-medium text-gray-950 text-[14px] mx-6"
-          href={"/"}
+          href={"/user_dashboard"}
         >
           Dashbaord
         </Link>
