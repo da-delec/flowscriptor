@@ -5,12 +5,13 @@ export async function saveToDb (formData:FormData){
     const title = formData.get("scriptName") as string
     const category = formData.get("selected-goal") as string
     const scriptprops = formData.get("scriptToSave") as string
+    const user_id = formData.get("userId") as string
     const reponse = await prisma.script.create({
         data:{
             Title:title,
             Script:scriptprops,
             Category:category,
-            UserId:"15307807-0dcd-4173-9493-6a6e4250de2e"
+            userId:user_id
         }
     })
     revalidatePath("/user_dashboard")

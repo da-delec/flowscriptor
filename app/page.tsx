@@ -1,9 +1,9 @@
 import Nav from "@/components/nav";
-
+import LandingNav from "@/components/landingNav";
 export default function Home() {
   return (
-    <div className=" items-center justify-items-center min-h-screen  pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <Nav />
+    <div className="  min-h-screen  pb-20   font-[family-name:var(--font-geist-sans)]">
+          <LandingNav />
       <h1>landing</h1>
     </div>
   );

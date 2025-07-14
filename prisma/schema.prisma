@@ -20,9 +20,11 @@ model User {
   name          String
   email         String
   emailVerified Boolean
+  isAdmin       Boolean   @default(false)
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+  scripts       Script[]
   sessions      Session[]
   accounts      Account[]
 
@@ -36,7 +38,8 @@ model Script {
   Script     String
   Category   String   @default("category")
   CreatedAt  DateTime @default(now())
-  UserId     String
+  User       User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
   isFavorite Boolean  @default(false)
 }
 

@@ -6,6 +6,15 @@ import { useForm } from "react-hook-form"
 import {  z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import {
   Form,
   FormControl,
   FormDescription,
@@ -15,6 +24,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import LoginButton from '@/components/loginButton'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client' 
 const LoginFormSchema = z.object({
@@ -48,13 +58,18 @@ export function LoginForm() {
     { 
       onSuccess:()=>{
         router.push("/user_dashboard");
-        router.refresh();
+      
       }
      
     })
   
   }
    return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Login to your Account</CardTitle>
+      </CardHeader>
+      <CardContent>
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="  mx-7 mt-7 space-y-8">
        
@@ -90,6 +105,12 @@ export function LoginForm() {
         <Button className=' bg-indigo-500 cursor-pointer hover:bg-indigo-300' type="submit">Submit</Button>
       </form>
     </Form>
+    </CardContent>
+    <CardFooter className=' flex justify-center flex-col'>
+      <CardTitle className=' mb-4'>Or Login with social</CardTitle>
+      <LoginButton />
+    </CardFooter>
+    </Card>
   )
 
 }

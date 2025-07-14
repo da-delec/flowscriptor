@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useTransition } from "react";
 import { WandSparkles, Loader2Icon } from "lucide-react";
-import { getDatasForm } from "../actions/form_actions";
+import { getDatasForm } from "../../lib/actions/form_actions";
 import { useActionState } from "react";
 import { Label } from "@/components/ui/label";
 import {
@@ -38,31 +38,35 @@ const Form = ({
   }, [state.result, setScript]);
 
   return (
-    <div className="w-full max-w-md mx-auto px-4 mt-4 h-screen">
-     
+    <div className="w-full max-w-xl mx-auto px-6 py-10">
       <form
         action={(formData) => {
           startTransition(() => {
             formAction(formData);
           });
         }}
-        className="flex flex-col space-y-3"
+        className="flex flex-col gap-6 bg-white/70 backdrop-blur-sm shadow-md rounded-xl p-6 border border-gray-200"
       >
-        {/* Name / Company */}
+        <h2 className="text-2xl font-semibold text-gray-800 text-center mb-4">
+          Generate your custom call script
+        </h2>
+
+        {/* Company Name */}
         <div>
-          <Label htmlFor="company_name" className="text-sm font-medium text-gray-700 mb-2 block">
+          <Label htmlFor="company_name" className="text-sm font-medium text-gray-700 mb-1 block">
             Your name or company name
           </Label>
           <Input
-            placeholder="Your name/Company Name"
+            placeholder="e.g. OpenAI / John Smith"
             name="company_name"
+            id="company_name"
             className="w-full"
           />
         </div>
 
         {/* Prospect Type */}
         <div>
-          <Label className="text-sm font-medium text-gray-700 mb-2 block">
+          <Label className="text-sm font-medium text-gray-700 mb-1 block">
             Prospect type
           </Label>
           <Select onValueChange={getValue}>
@@ -70,7 +74,7 @@ const Form = ({
               <SelectValue placeholder="Select a prospect type" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="software">Software/Logiciel</SelectItem>
+              <SelectItem value="software">Software / Logiciel</SelectItem>
               <SelectItem value="e-commerce">E-commerce</SelectItem>
               <SelectItem value="real-estate">Real Estate</SelectItem>
               <SelectItem value="proactivity">Proactivity</SelectItem>
@@ -79,13 +83,13 @@ const Form = ({
           <input name="prospect-type" type="hidden" value={selectedValue} />
         </div>
 
-        {/* Enterprise Name */}
+        {/* Target enterprise */}
         <div>
-          <Label htmlFor="enterprise_name" className="text-sm font-medium text-gray-700 mb-2 block">
+          <Label htmlFor="enterprise_name" className="text-sm font-medium text-gray-700 mb-1 block">
             Target enterprise or person
           </Label>
           <Input
-            placeholder="Enterprise Name"
+            placeholder="e.g. Google / Jane Doe"
             name="enterpriseName"
             type="text"
             id="enterprise_name"
@@ -95,20 +99,20 @@ const Form = ({
 
         {/* Call Goal */}
         <div>
-          <Label className="text-sm font-medium text-gray-700 mb-2 block">
+          <Label className="text-sm font-medium text-gray-700 mb-1 block">
             Call Goal
           </Label>
           <Select onValueChange={(e) => setSelectedGoal(e)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a call goal" />
+              <SelectValue placeholder="Select a goal" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="Prospecting-Call">Prospecting Call</SelectItem>
+              <SelectItem value="Prospecting-Call">Prospecting</SelectItem>
               <SelectItem value="Appointment">Appointment Setting</SelectItem>
-              <SelectItem value="Follow-up">Follow-up Call</SelectItem>
+              <SelectItem value="Follow-up">Follow-up</SelectItem>
               <SelectItem value="Qualification">Qualification / Discovery</SelectItem>
-              <SelectItem value="Closing">Closing Call</SelectItem>
-              <SelectItem value="Reactivation">Reactivation Call</SelectItem>
+              <SelectItem value="Closing">Closing</SelectItem>
+              <SelectItem value="Reactivation">Reactivation</SelectItem>
             </SelectContent>
           </Select>
           <input name="selected-goal" type="hidden" value={selectedGoal} />
@@ -116,7 +120,7 @@ const Form = ({
 
         {/* Call Tone */}
         <div>
-          <Label className="text-sm font-medium text-gray-700 mb-2 block">
+          <Label className="text-sm font-medium text-gray-700 mb-1 block">
             Call Tone
           </Label>
           <Select onValueChange={(e) => setIsSelectedTone(e)}>
@@ -126,10 +130,9 @@ const Form = ({
             <SelectContent>
               <SelectItem value="Professional">Professional</SelectItem>
               <SelectItem value="Friendly">Friendly / Warm</SelectItem>
-              <SelectItem value="Direct">Direct / Straightforward</SelectItem>
+              <SelectItem value="Direct">Direct</SelectItem>
               <SelectItem value="Calm-Reassuring">Calm / Reassuring</SelectItem>
               <SelectItem value="Formal">Formal</SelectItem>
-              <SelectItem value="Reactivation">Reactivation Call</SelectItem>
             </SelectContent>
           </Select>
           <input type="hidden" name="tone" value={selectedTone} />
@@ -137,12 +140,12 @@ const Form = ({
 
         {/* Language */}
         <div>
-          <Label className="text-sm font-medium text-gray-700 mb-2 block">
+          <Label className="text-sm font-medium text-gray-700 mb-1 block">
             Language
           </Label>
           <Select onValueChange={(e) => setIsSelectedLanguages(e)}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Select a language" />
+              <SelectValue placeholder="Choose a language" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="French">Français</SelectItem>
@@ -153,20 +156,25 @@ const Form = ({
         </div>
 
         {/* Submit */}
-        {isPending ? (
-          <Button disabled className="w-full flex items-center justify-center gap-2">
-            <Loader2Icon className="animate-spin" />
-            Please Wait
-          </Button>
-        ) : (
+        <div>
           <Button
             type="submit"
-            className="w-full bg-indigo-500 hover:bg-indigo-400 transition-transform hover:scale-[1.02] flex items-center justify-center gap-2"
+            disabled={isPending}
+            className="w-full flex items-center justify-center gap-2 text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-400 hover:to-purple-400 transition-all"
           >
-            Generate
-            <WandSparkles />
+            {isPending ? (
+              <>
+                <Loader2Icon className="animate-spin w-4 h-4" />
+                Please wait...
+              </>
+            ) : (
+              <>
+                Generate
+                <WandSparkles className="w-4 h-4" />
+              </>
+            )}
           </Button>
-        )}
+        </div>
       </form>
     </div>
   );

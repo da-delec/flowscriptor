@@ -7,15 +7,15 @@ import { Button } from '@/components/ui/button';
 
 
 
-type userInfos = {
-    Id: string;
-    CreatedAt: Date;
-    Title: string;
-    Script: string;
-    Category: string;
-    isFavorite:boolean;
-    UserId: string;
-  };
+type userInfos  =  {
+  Script: string;
+  Id: string;
+  Title: string;
+  Category: string;
+  CreatedAt: Date;
+  userId: string;
+  isFavorite: boolean;
+}[];;
 
 const Script_list =  ({data}:{data:userInfos[]}) => {
     const [filteredData,setFilterData] = useState(false)

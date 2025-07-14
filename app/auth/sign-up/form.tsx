@@ -46,11 +46,11 @@ export function ProfileForm() {
       },
     {
         onSuccess:()=>{
-            router.push("http://localhost:3000/user_dashboard")
+            router.push("/user_dashboard")
 
         }
     })
-    console.log(values)
+  
   }
    return (
     <Form {...form}>

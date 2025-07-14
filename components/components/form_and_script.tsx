@@ -15,7 +15,7 @@ const Form_and_script = () => {
       <div>
 
       
-      <h1 className=' text-3xl font-semibold mt-6'>Generated Script</h1>
+      <h1 className=' text-2xl font-semibold mt-6'>Generated Script</h1>
       <Script_ script={script}/>
       </div>
     </div>

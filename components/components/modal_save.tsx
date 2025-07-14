@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { saveToDb } from "../actions/save_action";
+import { saveToDb } from "../../lib/actions/save_action";
 import {
   Dialog,
   DialogClose,
@@ -20,9 +20,11 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useSession } from "@/app/user_dashboard/context/sessionContext";
 
 export function DialogDemo({ scriptprops }: { scriptprops: string }) {
   const [category, setCategory] = useState("");
+  const user = useSession();
 
   return (
     <Dialog>
@@ -69,6 +71,7 @@ export function DialogDemo({ scriptprops }: { scriptprops: string }) {
                   <SelectItem value="Reactivation">Reactivation Call</SelectItem>
                 </SelectContent>
               </Select>
+              <input type="hidden" value={user?.id} name="userId"  />
               <input name="selected-goal" type="hidden" value={category} />
               <input name="scriptToSave" type="hidden" value={scriptprops} />
             </div>
