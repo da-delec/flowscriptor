@@ -8,7 +8,7 @@ type User = {
     email: string;
     createdAt: Date;
     updatedAt: Date;
-    isAdmin:boolean
+    isAdmin:boolean |undefined
     image?: string | null | undefined | undefined;
 };
 

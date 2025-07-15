@@ -24,12 +24,12 @@ const LoginButton = () => {
     )
     }
   return (
-    <div className=' mt-3' id='social-provider'>
-          <Button onClick={SignUpGithub} className=' mx-3'>
+    <div className=' flex-col flex mt-3 w-full  justify-center ' id='social-provider'>
+          <Button onClick={SignUpGithub} className=' w-[90%] text-slate-100  mx-auto my-3 border-slate-700 border bg-slate-800 '>
           <FaGithub />
-
+ 
             Github</Button>
-          <Button className=' mx-3'>
+          <Button className=' w-[90%] text-slate-100  my-3 mx-auto border-slate-700 border bg-slate-800 '>
           <FcGoogle />
 
             Google</Button>

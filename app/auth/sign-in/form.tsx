@@ -25,8 +25,10 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import LoginButton from '@/components/loginButton'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client' 
+import { BorderBeam } from '@/components/magicui/border-beam'
 const LoginFormSchema = z.object({
  
   email: z.string(),
@@ -65,22 +67,23 @@ export function LoginForm() {
   
   }
    return (
-    <Card>
+    <Card className=' overflow-hidden relative bg-slate-900 h-[full] max-w-[350px] w-full border border-slate-800  text-gray-100 '>
       <CardHeader>
-        <CardTitle>Login to your Account</CardTitle>
+        
+        <CardTitle className=' text-lg text-slate-200'>Login to your Account</CardTitle>
       </CardHeader>
       <CardContent>
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="  mx-7 mt-7 space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="  mx-2 mt-7 flex flex-col justify-center space-y-8">
        
           <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel className=' text-slate-300'>Email</FormLabel>
               <FormControl>
-                <Input placeholder="Type your email" {...field} />
+                <Input  className=' placeholder:text-sm border-slate-700 placeholder:text-slate-400 focus:ring-0 bg-slate-800 text-gray-100 ' placeholder="Type your email" {...field} />
               </FormControl>
            
               <FormMessage />
@@ -92,25 +95,31 @@ export function LoginForm() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <Input placeholder="Type your password" {...field} />
+              <FormLabel className=' text-slate-300'>Password</FormLabel>
+              <FormControl className=' '>
+                <Input  className=' bg-slate-800 placeholder:text-sm placeholder:text-slate-400 focus-visible:ring-amber-400 border-slate-700  ring-slate-900 ' placeholder="Type your password" {...field} />
               </FormControl>
              
               <FormMessage />
             </FormItem>
           )}
         />
+        <Link className=' text-sm text-indigo-300 underline underline-offset-2' href={""}>Password forgot</Link>
         
-        <Button className=' bg-indigo-500 cursor-pointer hover:bg-indigo-300' type="submit">Submit</Button>
+        <Button className=' bg-ring   cursor-pointer hover:bg-indigo-300' type="submit">Login</Button>
       </form>
     </Form>
     </CardContent>
     <CardFooter className=' flex justify-center flex-col'>
-      <CardTitle className=' mb-4'>Or Login with social</CardTitle>
+      <CardTitle className=' mb-2'>Or Login with social</CardTitle>
       <LoginButton />
+      <h1 className=' text-sm'>You don't have an Account , <Link className=' text-indigo-300 underline underline-offset-2' href={"/auth/sign-up"} >sign-up</Link></h1>
     </CardFooter>
+   
+    <BorderBeam size={200} duration={6} />
+    <BorderBeam size={200} delay={3} duration={6} />
     </Card>
-  )
+
+)
 
 }

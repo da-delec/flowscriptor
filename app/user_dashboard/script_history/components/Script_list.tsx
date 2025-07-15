@@ -13,18 +13,20 @@ type userInfos  =  {
   Title: string;
   Category: string;
   CreatedAt: Date;
-  userId: string;
+  UserId: string;
   isFavorite: boolean;
 }[];;
 
-const Script_list =  ({data}:{data:userInfos[]}) => {
+const Script_list =  ({data}:{data:userInfos}) => {
+   
     const [filteredData,setFilterData] = useState(false)
+    
      const showFavorites = filteredData ? 
      data.filter((item)=>{
         return item.isFavorite == true
      }): data;
     
-     
+   //probleme de type entre ce qu on recois de l api et ce qu on envoit en props pour le mapping , a regler  
   return (
     <>
     <div id='button-container-title' className=' w-full  ml-14 md:ml-24'>

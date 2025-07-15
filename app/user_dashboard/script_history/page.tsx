@@ -20,7 +20,7 @@ const Script_history =  () => {
     Title: string;
     Category: string;
     CreatedAt: Date;
-    userId: string;
+    UserId: string;
     isFavorite: boolean;
   }[];
 
@@ -35,10 +35,10 @@ async function getValue () {
  
 useEffect(()=>{
   getValue()
+ 
 },[])
 
-
-
+  console.log(userScript)
   return (
     <div className=' h-[calc(100vh-68px)] overflow-y-auto flex flex-col mt-5  items-center w-screen space-y-6 '>
       <div id='filter-container' className=' ml-16 w-full'>

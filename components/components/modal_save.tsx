@@ -29,7 +29,7 @@ export function DialogDemo({ scriptprops }: { scriptprops: string }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Open Dialog</Button>
+        <Button className=" bg-indigo-500" variant="outline">Open Dialog</Button>
       </DialogTrigger>
 
       <DialogContent className="sm:max-w-[425px]">
@@ -47,13 +47,14 @@ export function DialogDemo({ scriptprops }: { scriptprops: string }) {
             <div className="grid gap-3">
               <Label htmlFor="script-name-input">Script Name</Label>
               <Input
+                className=" focus:border-indigo-300"
                 id="script-name-input"
                 name="scriptName"
                 defaultValue="Script 1"
               />
             </div>
 
-            <div className="grid gap-3">
+            <div className="grid gap-2">
               <Select onValueChange={(e: string) => setCategory(e)}>
                 <SelectTrigger className="w-[80%] mt-7">
                   <SelectValue placeholder="Cold call Types" />
@@ -77,11 +78,11 @@ export function DialogDemo({ scriptprops }: { scriptprops: string }) {
             </div>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className=" mt-8">
             <DialogClose asChild>
               <Button variant="outline">Cancel</Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button className=" bg-indigo-500 text-white hover:bg-indigo-300 cursor-pointer" type="submit">Save changes</Button>
           </DialogFooter>
         </form>
       </DialogContent>

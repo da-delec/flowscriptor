@@ -7,8 +7,8 @@ import { TypingAnimation } from '../magicui/typing-animation';
 
 const Script_ = ({ script }: { script: string }) => {
   return (
-    <div className="flex-1 w-full max-w-4xl mx-auto px-4 py-8 flex flex-col items-center justify-center">
-      <div className="relative w-full max-h-[600px] min-h-[300px] overflow-y-auto rounded-2xl bg-white/70 backdrop-blur-md shadow-xl border border-gray-200 p-6 mb-6 animate-fade-in transition-all">
+    <div className="flex-1 w-full max-w-4xl mx-auto px-4 py-9 flex flex-col items-center justify-center">
+      <div className="relative w-full max-h-[600px] min-h-[600px] min-w-[400px] overflow-y-auto rounded-2xl bg-white/70 backdrop-blur-md shadow-xl border border-gray-200 p-6 mb-6 animate-fade-in transition-all">
         <div className="prose prose-sm md:prose-base text-gray-800 whitespace-pre-wrap font-normal leading-relaxed">
           <TypingAnimation duration={0.25} className="text-start text-sm">
             {script}

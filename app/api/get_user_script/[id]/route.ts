@@ -14,9 +14,8 @@ export async function GET (req:Request,{params}:{params:{id:string}}){
             scripts:true
         }
     })
-    console.log(userScript)
     const scripts =  userScript?.scripts;
-    return NextResponse.json({scripts},{status:200})
+    return NextResponse.json(scripts)
 
 }
 
