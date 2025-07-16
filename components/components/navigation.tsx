@@ -18,7 +18,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import src from "../../lib/logo.png";
+import src from "@/public/logo.png"
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { MdOutlineMenu } from "react-icons/md";

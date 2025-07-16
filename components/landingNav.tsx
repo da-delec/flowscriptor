@@ -1,4 +1,4 @@
-import Logo from "../lib/logo.png"
+import Logo from "@/public/logo.png"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import {
