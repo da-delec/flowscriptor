@@ -29,6 +29,7 @@ import { authClient } from '@/lib/auth-client'
 import { BorderBeam } from '@/components/magicui/border-beam'
 import LoginButton from '@/components/loginButton'
 import Link from 'next/link'
+import { toast } from 'sonner'
 const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
@@ -60,6 +61,9 @@ export function ProfileForm() {
         onSuccess:()=>{
             router.push("/user_dashboard")
 
+        },
+        onError:(error)=>{
+         toast.error("Your email is already in use")
         }
     })
   

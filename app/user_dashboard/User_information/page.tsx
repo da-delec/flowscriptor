@@ -13,44 +13,23 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { getUser  } from "@/lib/authUser";
 import { redirect } from "next/navigation";
-import { use } from "react";
+import { Suspense, use } from "react";
+import UserInfos from "./userInfos";
 
 
 
 
-
- const User_information = async  () => {
-
-   const user = await getUser(); 
-   if (!user) {
-    redirect("/auth/sign-in")
-   }  
-
-
-   
-
- 
-   
+ const User_information = async () => {
+  const user = await getUser();
+  if (!user) {
+    // SSR redirect
+    return <div className="text-white text-2xl">Redirecting...</div>;
+  }
   return (
-    <div className=' h-[90vh] w-screen flex justify-center items-center'>
-        <Card className=' w-[80%]'>
-            <CardHeader className=" text-2xl font-semibold">
-                Your profile
-            </CardHeader>
-            <CardContent>
-                <CardTitle>Username:</CardTitle>
-                <h1 className=" my-2">{user?.name}</h1>
-                <CardTitle>Email:</CardTitle>
-                <h1 className=" my-2">{user?.email}</h1>
-                <CardTitle>
-                  
-                </CardTitle>
-            </CardContent>
-        </Card>
-        
-      
+    <div className="h-[90vh] w-screen flex justify-center items-center">
+      <UserInfos user={user} />
     </div>
-  )
-}
+  );
+};
 
-export default User_information
+export default User_information;

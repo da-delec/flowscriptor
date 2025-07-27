@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner"
+
 import Nav from "@/components/nav";
 import LandingNav from "@/components/landingNav";
 
@@ -31,6 +33,7 @@ export default function RootLayout({
       >
      
         {children}
+          <Toaster />
       </body>
     </html>
   );

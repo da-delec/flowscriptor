@@ -8,8 +8,11 @@ type User = {
     email: string;
     createdAt: Date;
     updatedAt: Date;
-    isAdmin:boolean |undefined
+    isAdmin:boolean |undefined;
+    plan: string;
+    scriptGenerated : number;
     image?: string | null | undefined | undefined;
+    stripeCustomerId: string; // Ajouté pour Stripe
 };
 
 const SessionContext = createContext<User | null>(null);

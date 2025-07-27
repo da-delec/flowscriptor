@@ -6,12 +6,14 @@ export async function saveToDb (formData:FormData){
     const category = formData.get("selected-goal") as string
     const scriptprops = formData.get("scriptToSave") as string
     const user_id = formData.get("userId") as string
+    const isClosed = formData.get("isClosed") === "true"
     const reponse = await prisma.script.create({
         data:{
             Title:title,
             Script:scriptprops,
             Category:category,
-            userId:user_id
+            userId:user_id,
+            isClosed:isClosed
         }
     })
     revalidatePath("/user_dashboard")

@@ -1,9 +1,11 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {  z } from "zod"
+import { toast } from "sonner"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -28,6 +30,7 @@ import LoginButton from '@/components/loginButton'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client' 
+import { unstable_ViewTransition as ViewTransition} from 'react'
 import { BorderBeam } from '@/components/magicui/border-beam'
 const LoginFormSchema = z.object({
  
@@ -36,45 +39,54 @@ const LoginFormSchema = z.object({
 })
  
 export function LoginForm() {
-    const router = useRouter();
-  // 1. Define your form.
+  const [error, setError] = React.useState<string | null>(null);
+  const router = useRouter();
   const form = useForm<z.infer<typeof LoginFormSchema>>({
     resolver: zodResolver(LoginFormSchema),
     defaultValues: {
-     
-      email:"",
-      password:"",
+      email: "",
+      password: "",
     },
-  })
- 
-  // 2. Define a submit handler.
-  async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
-      await authClient.signIn.email({
-        email:values.email,
-     
-        password:values.password,
-        
+  });
 
-        
-      },
-    { 
-      onSuccess:()=>{
-        router.push("/user_dashboard");
-      
-      }
-     
-    })
-  
+  async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
+    setError(null);
+    try {
+      await authClient.signIn.email(
+        {
+          email: values.email,
+          password: values.password,
+        },
+        {
+          onSuccess: () => {
+            toast.success("Login successful!");
+            router.push("/user_dashboard");
+          },
+          onError: (error) => {
+            toast.error("Login failed. Please check your credentials.");
+          },
+        }
+      );
+    } catch (err) {
+toast.error("Login failed. Please check your credentials.");}
   }
-   return (
-    <Card className=' overflow-hidden relative bg-slate-900 h-[full] max-w-[350px] w-full border border-slate-800  text-gray-100 '>
+
+
+
+  return (
+    
+    <Card className='overflow-hidden relative bg-slate-900 h-[full] max-w-[350px] w-full border border-slate-800 text-gray-100'>
       <CardHeader>
-        
-        <CardTitle className=' text-lg text-slate-200'>Login to your Account</CardTitle>
+        <CardTitle className='text-lg text-slate-200'>Login to your Account</CardTitle>
       </CardHeader>
       <CardContent>
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="  mx-2 mt-7 flex flex-col justify-center space-y-8">
+        {error && (
+          <div className="mb-4 text-sm text-red-400 bg-red-900/30 border border-red-700 rounded-lg px-3 py-2 text-center">
+            {error}
+          </div>
+        )}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mx-2 mt-7 flex flex-col justify-center space-y-8">
        
           <FormField
           control={form.control}
@@ -119,6 +131,7 @@ export function LoginForm() {
     <BorderBeam size={200} duration={6} />
     <BorderBeam size={200} delay={3} duration={6} />
     </Card>
+   
 
 )
 

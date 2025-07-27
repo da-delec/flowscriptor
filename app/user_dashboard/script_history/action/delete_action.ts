@@ -2,9 +2,9 @@
 import { prisma } from "@/lib/prisma"
 import { time } from "console"
 import { revalidatePath } from "next/cache"
-export async function delete_item(formData:FormData) {
+export async function delete_item(id:string) {
  
-   const id = formData.get("idValue") as string
+  
     const deletedItem = await prisma.script.delete({
         where:{
             Id:id

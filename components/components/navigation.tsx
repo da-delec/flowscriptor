@@ -3,7 +3,7 @@ import React, { use } from "react";
 import Image from "next/image";
 import { CiLogout } from "react-icons/ci";
 import { MdOutlineAccountCircle } from "react-icons/md";
-
+import { BorderBeam } from "../magicui/border-beam";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,16 +18,17 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { Badge } from "@/components/ui/badge"
+
 import src from "@/public/logo.png"
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
-import { MdOutlineMenu } from "react-icons/md";
-import { MdOutlineSpaceDashboard } from "react-icons/md";
-import { CiCircleList } from "react-icons/ci";
-import { BsTelephone } from "react-icons/bs";
-import { RiAdminLine } from "react-icons/ri";
 
-import { useEffect } from "react";
+import { RiAdminLine } from "react-icons/ri";
+import { FiRefreshCw } from "react-icons/fi";
+import { MessageSquare } from "lucide-react";
+
 import { useSession } from "@/app/user_dashboard/context/sessionContext";
 import Link from "next/link";
 import Menu_button from "./menu_button";
@@ -39,8 +40,10 @@ type User = {
   email: string;
   createdAt: Date;
   updatedAt: Date;
-  isAdmin:boolean |undefined;
-  image?: string | null | undefined | undefined;
+  plan: string | undefined;
+  isAdmin: boolean | undefined;
+  image?: string | null | undefined;
+  scriptGenerated: number;
 };
 
 const Navigation = ({ session }: { session: User }) => {
@@ -57,27 +60,48 @@ const Navigation = ({ session }: { session: User }) => {
       },
     });
   }
+
+  const handleRefresh = () => {
+    router.refresh();
+  };
+
+  console.log(typeof(session.plan));
   return (
     <div
       id="navbar_dashboard"
-      className=" h-[68px] flex justify-between items-center  w-screen border-b "
+      className=" h-[68px] flex justify-between items-center bg-slate-900 text-slate-100 border-slate-700/70  w-screen border-b "
     >
-      <div id="logo" className=" ml-5 h-full flex w-1/5 items-center">
-        <Image className=" mr-1" alt="logo" src={src} height={55} width={55} />
-        <h1 className=" font-semibold text-gray-950 my-auto text-2xl">
+      <div id="logo" className=" ml-5 h-full flex w-1/5 md:ml-36 items-center">
+        <Image className=" mr-1" alt="logo" src={src} height={40} width={40} />
+        <h1 className=" font-semibold text-slate-50 my-auto text-xl">
           Callia
         </h1>
       </div>
       <div
         id="tablet-menu"
-        className=" items-center flex justify-end h-full w-1/5"
+        className=" items-center  flex justify-end h-full w-3/5"
       >
+        <div className="  w-lg flex flex-col justify-center items-end">
+        <Badge className={`${session.plan == "ULTRA" && "bg-green-500/55 border border-green-400/65"} ${session.plan === "STARTER" && "bg-blue-500/55 border border-blue-400/65"} ${session.plan === "FREE" && "bg-gray-500/55 border border-gray-400/65"} relative  border  mr-3`}>{session.plan} <BorderBeam></BorderBeam></Badge>
+        <div className="flex items-center gap-2 mt-1">
+          <p className=" text-xs text-slate-400">{session.scriptGenerated} scripts générés</p>
+          <button 
+            onClick={handleRefresh}
+            className="text-slate-400 hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-800/50"
+            title="Actualiser le compteur"
+          >
+            <FiRefreshCw className="w-3 h-3" />
+          </button>
+        </div>
+        </div>
+       
+        <Menu_button />
         <DropdownMenu>
-          <DropdownMenuTrigger className=" border-none hover:scale-105 bg-indigo-500 cursor-pointer text-white rounded-md h-[60%] min-w-[79px] ">
-            {session?.name}
+          <DropdownMenuTrigger className="border-none rounded-full hover:scale-105 bg-indigo-500 cursor-pointer mr-6 text-white h-[40px] md:mr-30 w-[40px] min-w-[40px] flex items-center justify-center">
+            {session?.name.split('')[0].toUpperCase()}
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem onClick={() => LogoutUser()}>
+            <DropdownMenuItem className="flex cursor-pointer" onClick={() => LogoutUser()}>
               {" "}
               <CiLogout />
               Logout
@@ -92,6 +116,13 @@ const Navigation = ({ session }: { session: User }) => {
                 Information
               </Link>
             </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Link href={"/user_dashboard/objections"}>
+                <MessageSquare className="mr-2" />
+                Gestion des Objections
+              </Link>
+            </DropdownMenuItem>
             
             {user?.isAdmin ?(
             
@@ -104,7 +135,6 @@ const Navigation = ({ session }: { session: User }) => {
               ):null}
           </DropdownMenuContent>
         </DropdownMenu>
-        <Menu_button />
       </div>
     </div>
   );

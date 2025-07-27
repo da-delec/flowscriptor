@@ -10,11 +10,13 @@ import { authClient } from '@/lib/auth-client';
 
 import { useRouter } from 'next/navigation';
 import LoginButton from '@/components/loginButton';
+import { unstable_ViewTransition as ViewTransition } from 'react';
 
 
 const page = () => {
  
   return (
+    <ViewTransition enter={'slide-in'}>
     <div className=' h-screen bg-slate-950 w-screen flex justify-center items-center'>
        <div className=' h-[90%] w-[80%] flex justify-center items-center  rounded-md'>
        
@@ -25,6 +27,7 @@ const page = () => {
         
       
     </div>
+    </ViewTransition>
   )
 }
 

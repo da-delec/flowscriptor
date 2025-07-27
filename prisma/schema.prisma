@@ -15,6 +15,12 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum Plan {
+  FREE
+  STARTER
+  ULTRA
+}
+
 model User {
   id String @id
   name          String
@@ -24,10 +30,12 @@ model User {
   image         String?
   createdAt     DateTime
   updatedAt     DateTime
+  plan          Plan      @default(FREE)
+  scriptGenerated Int       @default(0)
   scripts       Script[]
   sessions      Session[]
   accounts      Account[]
-
+  stripeCustomerId String @default("cus_000000000000000000000000")
   @@unique([email])
   @@map("user")
 }
@@ -41,6 +49,7 @@ model Script {
   User       User @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId     String
   isFavorite Boolean  @default(false)
+  isClosed   Boolean  @default(false)
 }
 
 model Session {

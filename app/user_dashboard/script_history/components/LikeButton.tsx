@@ -1,38 +1,60 @@
-import React from 'react'
-import { Button } from '@/components/ui/button'
-import { FaHeart } from 'react-icons/fa'
-import { FaRegHeart } from 'react-icons/fa'
-type userInfos = {
-    Id: string;
-    CreatedAt: Date;
-    Title: string;
-    Script: string;
-    Category: string;
-    isFavorite:boolean;
-    UserId: string;
-  };
+"use client"
 
-const LikeButton = ({information}:{information:userInfos}) => {
-  return (
-    
-        <Button type="submit" id="favoris" className=" bg-white border cursor-pointer hover:border-none hover:bg-indigo-200 border-indigo-500 mx-3">
-          {information.isFavorite ? (
-            <>
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { FaStar, FaRegStar } from "react-icons/fa";
+import { toggleFavorite } from "@/lib/actions/toggle_favorite_action";
+import { toast } from "sonner";
 
-            <FaHeart className=" text-indigo-500" />
-            <p className=" text-indigo-500">Liked</p>
-            </>
-          ) : (
-            <>
-            <FaRegHeart className=" text-indigo-500" />
-            <p className=" text-indigo-500">Like</p>
-            </>
-
-          )}
-       </Button>
-      
-    
-  )
+interface LikeButtonProps {
+  scriptId: string;
+  isFavorite: boolean;
 }
 
-export default LikeButton
+export default function LikeButton({ scriptId, isFavorite }: LikeButtonProps) {
+  const [isPending, setIsPending] = useState(false);
+  const [currentIsFavorite, setCurrentIsFavorite] = useState(isFavorite);
+
+  const handleToggleFavorite = async () => {
+    setIsPending(true);
+    
+    try {
+      const result = await toggleFavorite(scriptId);
+      
+      if (result.error) {
+        toast.error(result.error);
+      } else if (result.success) {
+        setCurrentIsFavorite(result.isFavorite);
+        toast.success(
+          result.isFavorite 
+            ? "Script ajouté aux favoris" 
+            : "Script retiré des favoris"
+        );
+      }
+    } catch (error) {
+      toast.error("Erreur lors de la mise à jour");
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  return (
+    <Button
+      variant="ghost"
+      size="sm"
+      onClick={handleToggleFavorite}
+      disabled={isPending}
+      className={`h-8 w-8 p-0 transition-all duration-200 ${
+        currentIsFavorite 
+          ? 'text-yellow-400 hover:text-yellow-300' 
+          : 'text-slate-400 hover:text-yellow-400'
+      }`}
+    >
+      {currentIsFavorite ? (
+        <FaStar className="h-4 w-4" />
+      ) : (
+        <FaRegStar className="h-4 w-4" />
+      )}
+    </Button>
+  );
+}

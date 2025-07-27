@@ -18,6 +18,9 @@ import { MdOutlineMenu } from 'react-icons/md'
 import { MdOutlineSpaceDashboard } from 'react-icons/md'
 import { CiCircleList } from 'react-icons/ci'
 import { BsTelephone } from 'react-icons/bs'
+import { LuLayoutTemplate } from "react-icons/lu";
+import { FaRegQuestionCircle } from 'react-icons/fa'
+
 
 const Menu_button =  () => {
    
@@ -31,7 +34,7 @@ const Menu_button =  () => {
         <MdOutlineMenu className=" text-2xl" />
         </div>
     </DropdownMenuTrigger>
-    <DropdownMenuContent className=' z-50'>
+    <DropdownMenuContent className=' w-36 z-50'>
       <DropdownMenuItem className=" cursor-pointer">
       <Link className=" flex" href={"/user_dashboard"}>
       <MdOutlineSpaceDashboard className=" mr-3" />
@@ -39,19 +42,33 @@ const Menu_button =  () => {
       Dashboard
       </Link>
       </DropdownMenuItem>
-      
-      <DropdownMenuItem className=" flex cursor-pointer">
-        <Link href={"user_dashboard/script_history"}>
+      <Link href={"/user_dashboard/script_history"}>
+      <DropdownMenuItem className="  w-full flex cursor-pointer">
       <CiCircleList />
         Script History
-        </Link>
+   
       </DropdownMenuItem>
-      <DropdownMenuItem className=" flex cursor-pointer">
-        Your plan
-      </DropdownMenuItem>
+      </Link>
+      <Link href={"/user_dashboard/objections"}>
+<DropdownMenuItem className=" flex cursor-pointer">
+  <FaRegQuestionCircle />
+  Objections
+</DropdownMenuItem>
+</Link>
+      
+      
+      <Link href={"/user_dashboard/joinUs"}>
       <DropdownMenuItem className=" flex cursor-pointer">
       <BsTelephone />
 Join us          </DropdownMenuItem>
+</Link>
+<Link href={"/user_dashboard/script_template"}>
+<DropdownMenuItem className=" flex cursor-pointer">
+  <LuLayoutTemplate />
+  Script Template
+</DropdownMenuItem>
+</Link>
+
   
     </DropdownMenuContent>
   </DropdownMenu>
