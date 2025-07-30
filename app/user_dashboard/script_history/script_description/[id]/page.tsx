@@ -10,7 +10,7 @@ const Badge = ({ children }: { children: React.ReactNode }) => (
   </span>
 );
 
-const Script_description = async ({ params }: { params: { id: string } }) => {
+const Script_description = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const script = await prisma.script.findUnique({
     where: {
