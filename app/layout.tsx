@@ -1,19 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
-
-
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "FlowScriptor - Générateur de Scripts de Cold Calling",
@@ -54,11 +41,13 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/faviconFinal.png" />
       </head>
       <body
-        className={` bg-slate-950 ${geistSans.variable} ${geistMono.variable} antialiased`}
+        className="bg-slate-950 font-sans antialiased"
+        style={{
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
+        }}
       >
-     
         {children}
-          <Toaster />
+        <Toaster />
       </body>
     </html>
   );

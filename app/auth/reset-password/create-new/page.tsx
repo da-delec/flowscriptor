@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { CreateNewPasswordForm } from './form'
 import { ShineBorder } from '@/components/magicui/shine-border'
 import { GridPattern } from '@/components/magicui/grid-pattern'
@@ -33,7 +33,14 @@ const CreateNewPassword = () => {
             <BorderBeam size={250} duration={8} />
             <BorderBeam size={250} delay={4} duration={8} />
             
-            <CreateNewPasswordForm />
+            <Suspense fallback={
+              <div className="bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-lg p-8 text-center">
+                <div className="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-slate-300">Chargement...</p>
+              </div>
+            }>
+              <CreateNewPasswordForm />
+            </Suspense>
           </div>
         </div>
       </div>

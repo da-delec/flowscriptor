@@ -19,7 +19,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 export default function Home() {
   console.log(Logo.src)
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 overflow-hidden font-[family-name:var(--font-geist-sans)]">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950 overflow-hidden">
       <LandingNav />
       
       {/* Hero Section with modern design */}
