@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const customerId = body.stripeCustomerId as string;
     const session = await stripe.billingPortal.sessions.create({
         customer: customerId,
-        return_url: "http://localhost:3000/user_dashboard"
+        return_url: "https://flowscriptor-ai.vercel.app/user_dashboard"
     })
     return NextResponse.json({url: session.url})
 }

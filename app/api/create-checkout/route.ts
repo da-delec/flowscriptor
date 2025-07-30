@@ -27,8 +27,8 @@ export async function POST(req: Request) {
       },
     ],
 
-    success_url: "http://localhost:3000/user_dashboard/pricing/success",
-    cancel_url: "http://localhost:3000/user_dashboard/pricing/cancel",
+    success_url: "https://flowscriptor-ai.vercel.app/user_dashboard/pricing/success",
+    cancel_url: "https://flowscriptor-ai.vercel.app/user_dashboard/pricing/cancel",
   
     customer: body.stripeCustomerId,
   });
