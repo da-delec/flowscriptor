@@ -5,10 +5,10 @@ import { NextResponse } from "next/server";
 
 export async function GET (
     req: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
   ) {
-    const {id} = await params
-    console.log(id)
+    const { id } = await params;
+    console.log(id);
     const userScript = await prisma.user.findUnique({
         where:{
             id:id
@@ -16,9 +16,8 @@ export async function GET (
         include:{
             scripts:true
         }
-    })
-    const scripts =  userScript?.scripts;
-    return NextResponse.json(scripts)
-
+    });
+    const scripts = userScript?.scripts;
+    return NextResponse.json(scripts);
 }
 
