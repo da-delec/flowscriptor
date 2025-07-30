@@ -1,5 +1,5 @@
 import React from 'react'
-import { LoginForm } from './form'
+import { CreateNewPasswordForm } from './form'
 import { ShineBorder } from '@/components/magicui/shine-border'
 import { GridPattern } from '@/components/magicui/grid-pattern'
 import { BorderBeam } from '@/components/magicui/border-beam'
@@ -8,7 +8,7 @@ import src from "@/lib/Frame 2.png"
 import Image from 'next/image'
 import { unstable_ViewTransition as ViewTransition } from 'react'
 
-const SignIn = () => {
+const CreateNewPassword = () => {
   return (
     <ViewTransition enter={"slide-in"} >
       <div className='min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 w-full flex justify-center items-center relative overflow-hidden'>
@@ -33,15 +33,11 @@ const SignIn = () => {
             <BorderBeam size={250} duration={8} />
             <BorderBeam size={250} delay={4} duration={8} />
             
-            {/* Logo/Title Section */}
-           
-            
-            <LoginForm />
+            <CreateNewPasswordForm />
           </div>
         </div>
       </div>
     </ViewTransition>
   )
 }
-export default SignIn
-
+export default CreateNewPassword

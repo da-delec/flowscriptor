@@ -84,7 +84,11 @@ const ScriptCard = ({ infos }: { infos: ScriptInfos }) => {
                   <Copy className="h-4 w-4 mr-2" />
                   Copier
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => startTransition(() => delete_item(scriptID))} className="text-red-400 focus:bg-slate-700">
+                <DropdownMenuItem onClick={() => {
+                  const formData = new FormData();
+                  formData.append('idValue', scriptID);
+                  startTransition(() => delete_item(formData));
+                }} className="text-red-400 focus:bg-slate-700">
                   <Trash2 className="h-4 w-4 mr-2" />
                   Supprimer
                 </DropdownMenuItem>

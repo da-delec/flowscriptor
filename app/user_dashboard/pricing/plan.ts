@@ -3,7 +3,7 @@ const plans = [
       name: "Free",
       price: "$0",
       period: "forever",
-      description: "Perfect for trying out Callia",
+      description: "Perfect for trying out FlowScriptor",
       badge: null,
       popular: false,
       features: [
@@ -29,11 +29,10 @@ const plans = [
       badge: "Most Popular",
       popular: true,
       features: [
-        { name: "500 scripts per month", included: true },
-        { name: "Advanced templates", included: true },
+        { name: "30 scripts per month", included: true },
+        { name: "6 ready-to-use script templates", included: true },
         { name: "Priority email support", included: true },
         { name: "Detailed analytics", included: true },
-        { name: "Export scripts", included: true },
         { name: "Team collaboration", included: false },
         { name: "Custom templates", included: false },
         { name: "Phone support", included: false },
@@ -53,7 +52,7 @@ const plans = [
       features: [
         { name: "Unlimited scripts", included: true },
         { name: "All premium templates", included: true },
-        { name: "24/7 phone & chat support", included: true },
+        { name: "Priority email support", included: true },
         { name: "Advanced analytics & insights", included: true },
         { name: "Team collaboration", included: true },
         { name: "Custom template builder", included: true },

@@ -38,18 +38,50 @@ if(scriptGen >= userLimit.scriptLimit) {
     - Call Goal: ${callGoal}
     - Tone: ${tone}
     - Description: ${description}
+    
     Structure the script like a real call: include greeting, intro, value proposition, handling objections, and call to action.
-    `; 
+    The script should be in ${languages} language.
+    
+    IMPORTANT: Return ONLY a valid JSON object with this exact structure:
+    {
+      "script": "Your complete sales script here...",
+      "objections": [
+        {
+          "objection": "It's too expensive",
+          "response": "I understand that budget is a concern. Many of our clients felt the same way before seeing how much time and money they saved after using our tool."
+        },
+        {
+          "objection": "I'm already using another solution",
+          "response": "Totally understandable. Many of our customers switched after realizing how we streamline their workflow and improve team collaboration."
+        },
+        {
+          "objection": "I don't have time to implement this right now",
+          "response": "That makes sense. The good news is that our onboarding takes less than an hour, and we provide full support to make it as smooth as possible."
+        }
+      ]
+    }
+    
+    Make sure all quotes are properly closed and the JSON is valid.
+`
+    ; 
        const completion = await openai.chat.completions.create({
-        model:"gpt-3.5-turbo",
+        model:"gpt-4.1-nano-2025-04-14",
         messages:[
             {role:"user",
              content:prompt,   
             }
         ],
-        max_completion_tokens:300,
+        max_completion_tokens:600,
     });
-    const result = completion.choices[0].message.content;
+    const result = completion.choices[0].message.content ;
+    
+    // Vérification que result n'est pas null
+    if (!result) {
+        return {
+            error: "Erreur lors de la génération du script. Veuillez réessayer."
+        }
+    }
+    
     await prisma.user.update({
         where: {
             id: session?.user.id,
@@ -62,6 +94,6 @@ if(scriptGen >= userLimit.scriptLimit) {
     });
     
     return {
-        result
+        result: result
     }
 }

@@ -66,7 +66,7 @@ const History_card = ({ infos, setIsFavorite }: propsType) => {
       <div className="relative z-10 flex justify-end gap-3 mt-2">
         <form onSubmit={handleLike} className="inline-block">
           <input type="hidden" name="idToLike" value={infos.Id} />
-          <LikeButton information={infos} />
+          <LikeButton scriptId={infos.Id} isFavorite={infos.isFavorite} />
         </form>
         <form action={delete_item} className="inline-block">
           <input type="hidden" name="idValue" value={infos.Id} />

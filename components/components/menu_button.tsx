@@ -39,13 +39,13 @@ const Menu_button =  () => {
       <Link className=" flex" href={"/user_dashboard"}>
       <MdOutlineSpaceDashboard className=" mr-3" />
       
-      Dashboard
+      Tableau de Bord
       </Link>
       </DropdownMenuItem>
       <Link href={"/user_dashboard/script_history"}>
       <DropdownMenuItem className="  w-full flex cursor-pointer">
       <CiCircleList />
-        Script History
+        Historique des Scripts
    
       </DropdownMenuItem>
       </Link>
@@ -55,19 +55,20 @@ const Menu_button =  () => {
   Objections
 </DropdownMenuItem>
 </Link>
+<Link href={"/user_dashboard/script_template"}>
+<DropdownMenuItem className=" flex cursor-pointer">
+  <LuLayoutTemplate />
+  Modèle de Script
+</DropdownMenuItem>
+</Link>
       
       
       <Link href={"/user_dashboard/joinUs"}>
       <DropdownMenuItem className=" flex cursor-pointer">
       <BsTelephone />
-Join us          </DropdownMenuItem>
+Rejoignez-nous          </DropdownMenuItem>
 </Link>
-<Link href={"/user_dashboard/script_template"}>
-<DropdownMenuItem className=" flex cursor-pointer">
-  <LuLayoutTemplate />
-  Script Template
-</DropdownMenuItem>
-</Link>
+
 
   
     </DropdownMenuContent>

@@ -5,8 +5,9 @@ export const LIMITATION:Record<Plan,{scriptLimit:number}> = {
         scriptLimit:5
     },
     STARTER:{
-        scriptLimit:20},
-        ULTRA:{
+        scriptLimit:30
+    },
+    ULTRA:{
         scriptLimit:100
-        }
+    }
 }

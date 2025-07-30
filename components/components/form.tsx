@@ -18,19 +18,13 @@ import { Plan } from "@/lib/generated/prisma";
 import { LIMITATION } from "@/lib/auth-plan";
 import { toast } from "sonner";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Sparkles, User, Building, Package, Clock } from "lucide-react";
+import { Sparkles, User, Building, Package, Clock, CopyMinus } from "lucide-react";
+
 
 const Form = ({
   setScript,
 }: {
-  setScript: React.Dispatch<React.SetStateAction<string>>;
+  setScript: (result: string) => void;
 }) => {
   const [formData, setFormData] = useState({
     prospectName: "",
@@ -43,6 +37,7 @@ const Form = ({
     productDescription: "",
     valueProposition: "",
     callObjective: "",
+    tone: "Professional", // Nouveau champ pour le ton
   });
   const [isPending, startTransition] = useTransition();
   const [state, formAction] = useActionState(getDatasForm, { result: "" });
@@ -72,215 +67,281 @@ const Form = ({
     formDataEvent.set("prospect-type", formData.industry);
     formDataEvent.set("enterpriseName", formData.prospectName);
     formDataEvent.set("selected-goal", formData.callObjective);
-    formDataEvent.set("tone", "Professional"); // Optionnel, à customiser si besoin
+    formDataEvent.set("tone", formData.tone); // Ajout du ton
     formDataEvent.set("description", formData.productDescription);
     formDataEvent.set("language", "French"); // Optionnel, à customiser si besoin
     // Les autres champs sont ignorés côté server action si non utilisés
-    startTransition(() => {
-      formAction(formDataEvent);
-    });
+    formAction(formDataEvent);
   }
 
   return (
-    <div className="h-full">
-      <Card className="bg-gradient-to-br from-slate-900/90 to-slate-950 border border-slate-800/70 rounded-2xl shadow-xl h-full overflow-hidden">
-        <CardHeader className="bg-gradient-to-r from-slate-900 to-slate-950 border-b border-slate-800/50 p-3 md:p-4">
-          <CardTitle className="text-white flex items-center gap-2 text-sm md:text-lg">
-            <div className="p-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg">
-              <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-white" />
+    <div className="bg-gradient-to-br from-slate-900/90 to-slate-950 border border-slate-800/70 rounded-2xl shadow-xl h-full max-h-[1300px] overflow-hidden">
+      {/* Header du formulaire */}
+      <div className="bg-gradient-to-r from-slate-900 to-slate-950 border-b border-slate-800/50 p-3 md:p-4">
+        <div className="text-white flex items-center gap-2 text-sm md:text-lg">
+          <div className="p-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-lg">
+            <Sparkles className="h-3 w-3 md:h-4 md:w-4 text-white" />
+          </div>
+          Script Generator
+        </div>
+        <div className="text-slate-400 text-xs md:text-sm">
+          Remplissez les détails ci-dessous pour générer un script de cold calling personnalisé
+        </div>
+      </div>
+      
+      {/* Contenu du formulaire */}
+      <div className="p-3 md:p-4 space-y-3 md:space-y-4 h-full flex flex-col">
+        <form
+          action={handleSubmit}
+          className="space-y-3 md:space-y-4 h-full flex flex-col"
+        >
+          {/* Prospect Information */}
+          <div className="space-y-2 md:space-y-3">
+            <div className="flex items-center gap-2 pb-1 md:pb-2 border-b border-slate-700/50">
+              <div className="p-1.5 bg-blue-600/20 rounded-lg">
+                <User className="h-4 w-4 md:h-5 md:w-5 text-blue-400" />
+              </div>
+              <h3 className="text-white font-semibold text-sm md:text-base">Informations Prospect</h3>
             </div>
-            Script Generator
-          </CardTitle>
-          <CardDescription className="text-slate-400 text-xs md:text-sm">
-            Remplissez les détails ci-dessous pour générer un script de cold calling personnalisé
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-3 md:p-4 space-y-3 md:space-y-4 h-full">
-          <form
-            action={handleSubmit}
-            className="space-y-3 md:space-y-4 h-full flex flex-col"
-          >
-            {/* Prospect Information */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
+              <div className="space-y-1">
+                <Label htmlFor="prospectName" className="text-slate-300 font-medium text-xs">Nom du prospect</Label>
+                <Input
+                  id="prospectName"
+                  placeholder="John Smith"
+                  value={formData.prospectName}
+                  onChange={(e) => handleInputChange('prospectName', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="prospectTitle" className="text-slate-300 font-medium text-xs">Poste</Label>
+                <Input
+                  id="prospectTitle"
+                  placeholder="Directeur Marketing"
+                  value={formData.prospectTitle}
+                  onChange={(e) => handleInputChange('prospectTitle', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Company Information */}
+          <div className="space-y-2 md:space-y-3">
+            <div className="flex items-center gap-2 pb-1 md:pb-2 border-b border-slate-700/50">
+              <div className="p-1.5 bg-green-600/20 rounded-lg">
+                <Building className="h-4 w-4 md:h-5 md:w-5 text-green-400" />
+              </div>
+              <h3 className="text-white font-semibold text-sm md:text-base">Informations Entreprise</h3>
+            </div>
             <div className="space-y-2 md:space-y-3">
-              <div className="flex items-center gap-2 pb-1 md:pb-2 border-b border-slate-700/50">
-                <div className="p-1.5 bg-blue-600/20 rounded-lg">
-                  <User className="h-4 w-4 md:h-5 md:w-5 text-blue-400" />
-                </div>
-                <h3 className="text-white font-semibold text-sm md:text-base">Informations Prospect</h3>
+              <div className="space-y-1">
+                <Label htmlFor="companyName" className="text-slate-300 font-medium text-xs">Nom de l'entreprise</Label>
+                <Input
+                  id="companyName"
+                  placeholder="TechCorp Inc."
+                  value={formData.companyName}
+                  onChange={(e) => handleInputChange('companyName', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
+                />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
                 <div className="space-y-1">
-                  <Label htmlFor="prospectName" className="text-slate-300 font-medium text-xs">Nom du prospect</Label>
-                  <Input
-                    id="prospectName"
-                    placeholder="John Smith"
-                    value={formData.prospectName}
-                    onChange={(e) => handleInputChange('prospectName', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="prospectTitle" className="text-slate-300 font-medium text-xs">Poste</Label>
-                  <Input
-                    id="prospectTitle"
-                    placeholder="Directeur Marketing"
-                    value={formData.prospectTitle}
-                    onChange={(e) => handleInputChange('prospectTitle', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Company Information */}
-            <div className="space-y-2 md:space-y-3">
-              <div className="flex items-center gap-2 pb-1 md:pb-2 border-b border-slate-700/50">
-                <div className="p-1.5 bg-green-600/20 rounded-lg">
-                  <Building className="h-4 w-4 md:h-5 md:w-5 text-green-400" />
-                </div>
-                <h3 className="text-white font-semibold text-sm md:text-base">Informations Entreprise</h3>
-              </div>
-              <div className="space-y-2 md:space-y-3">
-                <div className="space-y-1">
-                  <Label htmlFor="companyName" className="text-slate-300 font-medium text-xs">Nom de l'entreprise</Label>
-                  <Input
-                    id="companyName"
-                    placeholder="TechCorp Inc."
-                    value={formData.companyName}
-                    onChange={(e) => handleInputChange('companyName', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
-                  />
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-3">
-                  <div className="space-y-1">
-                    <Label htmlFor="industry" className="text-slate-300 font-medium text-xs">Secteur d'activité</Label>
-                    <Select value={formData.industry} onValueChange={(value) => handleInputChange('industry', value)}>
-                      <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9">
-                        <SelectValue placeholder="Sélectionner un secteur" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-600">
-                        <SelectItem value="technology">Technologie</SelectItem>
-                        <SelectItem value="healthcare">Santé</SelectItem>
-                        <SelectItem value="finance">Finance</SelectItem>
-                        <SelectItem value="retail">Commerce</SelectItem>
-                        <SelectItem value="manufacturing">Industrie</SelectItem>
-                        <SelectItem value="education">Éducation</SelectItem>
-                        <SelectItem value="real-estate">Immobilier</SelectItem>
-                        <SelectItem value="other">Autre</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <Label htmlFor="companySize" className="text-slate-300 font-medium text-xs">Taille de l'entreprise</Label>
-                    <Select value={formData.companySize} onValueChange={(value) => handleInputChange('companySize', value)}>
-                      <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9">
-                        <SelectValue placeholder="Sélectionner la taille" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-800 border-slate-600">
-                        <SelectItem value="startup">Startup (1-10)</SelectItem>
-                        <SelectItem value="small">Petite (11-50)</SelectItem>
-                        <SelectItem value="medium">Moyenne (51-200)</SelectItem>
-                        <SelectItem value="large">Grande (201-1000)</SelectItem>
-                        <SelectItem value="enterprise">Enterprise (1000+)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="painPoint" className="text-slate-300 font-medium text-xs">Point de douleur principal</Label>
-                  <Input
-                    id="painPoint"
-                    placeholder="ex: Processus manuels, Faibles taux de conversion, Coûts élevés"
-                    value={formData.painPoint}
-                    onChange={(e) => handleInputChange('painPoint', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Product Information */}
-            <div className="space-y-2 md:space-y-3 flex-1">
-              <div className="flex items-center gap-2 pb-1 md:pb-2 border-b border-slate-700/50">
-                <div className="p-1.5 bg-purple-600/20 rounded-lg">
-                  <Package className="h-4 w-4 md:h-5 md:w-5 text-purple-400" />
-                </div>
-                <h3 className="text-white font-semibold text-sm md:text-base">Votre Produit/Service</h3>
-              </div>
-              <div className="space-y-2 md:space-y-3">
-                <div className="space-y-1">
-                  <Label htmlFor="productName" className="text-slate-300 font-medium text-xs">Nom du produit/service</Label>
-                  <Input
-                    id="productName"
-                    placeholder="Votre produit SaaS"
-                    value={formData.productName}
-                    onChange={(e) => handleInputChange('productName', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="productDescription" className="text-slate-300 font-medium text-xs">Description brève</Label>
-                  <Textarea
-                    id="productDescription"
-                    placeholder="Que fait votre produit ? Gardez-le concis..."
-                    value={formData.productDescription}
-                    onChange={(e) => handleInputChange('productDescription', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs min-h-14 max-h-20"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="valueProposition" className="text-slate-300 font-medium text-xs">Bénéfice/Résultat clé</Label>
-                  <Input
-                    id="valueProposition"
-                    placeholder="ex: Économisez 10h par semaine, Augmentez les ventes de 30%"
-                    value={formData.valueProposition}
-                    onChange={(e) => handleInputChange('valueProposition', e.target.value)}
-                    className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label htmlFor="callObjective" className="text-slate-300 font-medium text-xs">Objectif de l'appel</Label>
-                  <Select value={formData.callObjective} onValueChange={(value) => handleInputChange('callObjective', value)}>
+                  <Label htmlFor="industry" className="text-slate-300 font-medium text-xs">Secteur d'activité</Label>
+                  <Select value={formData.industry} onValueChange={(value) => handleInputChange('industry', value)}>
                     <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9">
-                      <SelectValue placeholder="Quel est votre objectif ?" />
+                      <SelectValue placeholder="Sélectionner un secteur" />
                     </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-600">
-                      <SelectItem value="demo">Programmer une démo</SelectItem>
-                      <SelectItem value="meeting">Prendre un rendez-vous découverte</SelectItem>
-                      <SelectItem value="trial">Commencer un essai gratuit</SelectItem>
-                      <SelectItem value="consultation">Programmer une consultation</SelectItem>
-                      <SelectItem value="information">Recueillir des informations</SelectItem>
+                    <SelectContent className="bg-slate-900 border-slate-700 shadow-xl">
+                      <SelectItem value="technology" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Technologie
+                      </SelectItem>
+                      <SelectItem value="healthcare" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Santé
+                      </SelectItem>
+                      <SelectItem value="finance" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Finance
+                      </SelectItem>
+                      <SelectItem value="retail" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Commerce
+                      </SelectItem>
+                      <SelectItem value="manufacturing" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Industrie
+                      </SelectItem>
+                      <SelectItem value="education" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Éducation
+                      </SelectItem>
+                      <SelectItem value="real-estate" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Immobilier
+                      </SelectItem>
+                      <SelectItem value="other" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Autre
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="companySize" className="text-slate-300 font-medium text-xs">Taille de l'entreprise</Label>
+                  <Select value={formData.companySize} onValueChange={(value) => handleInputChange('companySize', value)}>
+                    <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9">
+                      <SelectValue placeholder="Sélectionner la taille" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-900 border-slate-700 shadow-xl">
+                      <SelectItem value="startup" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Startup (1-10)
+                      </SelectItem>
+                      <SelectItem value="small" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Petite (11-50)
+                      </SelectItem>
+                      <SelectItem value="medium" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Moyenne (51-200)
+                      </SelectItem>
+                      <SelectItem value="large" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Grande (201-1000)
+                      </SelectItem>
+                      <SelectItem value="enterprise" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                        Enterprise (1000+)
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               </div>
+              <div className="space-y-1">
+                <Label htmlFor="painPoint" className="text-slate-300 font-medium text-xs">Point de douleur principal</Label>
+                <Input
+                  id="painPoint"
+                  placeholder="ex: Processus manuels, Faibles taux de conversion, Coûts élevés"
+                  value={formData.painPoint}
+                  onChange={(e) => handleInputChange('painPoint', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
+                />
+              </div>
             </div>
+          </div>
 
+          {/* Product Information */}
+          <div className="space-y-2 md:space-y-3 ">
+            <div className="flex items-center gap-2 pb-1 md:pb-2 border-b border-slate-700/50">
+              <div className="p-1.5 bg-purple-600/20 rounded-lg">
+                <Package className="h-4 w-4 md:h-5 md:w-5 text-purple-400" />
+              </div>
+              <h3 className="text-white font-semibold text-sm md:text-base">Votre Produit/Service</h3>
+            </div>
+            <div className="space-y-2 md:space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="productName" className="text-slate-300 font-medium text-xs">Nom du produit/service</Label>
+                <Input
+                  id="productName"
+                  placeholder="Votre produit SaaS"
+                  value={formData.productName}
+                  onChange={(e) => handleInputChange('productName', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="productDescription" className="text-slate-300 font-medium text-xs">Description brève</Label>
+                <Textarea
+                  id="productDescription"
+                  placeholder="Que fait votre produit ? Gardez-le concis..."
+                  value={formData.productDescription}
+                  onChange={(e) => handleInputChange('productDescription', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs min-h-14 max-h-20"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="valueProposition" className="text-slate-300 font-medium text-xs">Bénéfice/Résultat clé</Label>
+                <Input
+                  id="valueProposition"
+                  placeholder="ex: Économisez 10h par semaine, Augmentez les ventes de 30%"
+                  value={formData.valueProposition}
+                  onChange={(e) => handleInputChange('valueProposition', e.target.value)}
+                  className="bg-slate-800/50 border-slate-600 text-white placeholder:text-slate-500 focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9"
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="callObjective" className="text-slate-300 font-medium text-xs">Objectif de l'appel</Label>
+                <Select value={formData.callObjective} onValueChange={(value) => handleInputChange('callObjective', value)}>
+                  <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9">
+                    <SelectValue placeholder="Quel est votre objectif ?" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-900 border-slate-700 shadow-xl">
+                    <SelectItem value="demo" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Programmer une démo
+                    </SelectItem>
+                    <SelectItem value="meeting" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Prendre un rendez-vous découverte
+                    </SelectItem>
+                    <SelectItem value="trial" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Commencer un essai gratuit
+                    </SelectItem>
+                    <SelectItem value="consultation" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Programmer une consultation
+                    </SelectItem>
+                    <SelectItem value="information" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Recueillir des informations
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              
+              {/* Nouveau champ pour le ton */}
+              <div className="space-y-1">
+                <Label htmlFor="tone" className="text-slate-300 font-medium text-xs">Ton du script</Label>
+                <Select value={formData.tone} onValueChange={(value) => handleInputChange('tone', value)}>
+                  <SelectTrigger className="bg-slate-800/50 border-slate-600 text-white focus:border-blue-500 focus:ring-blue-500/20 transition-all text-xs h-9">
+                    <SelectValue placeholder="Choisir le ton" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-slate-900 border-slate-700 shadow-xl">
+                    <SelectItem value="Professional" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Professionnel
+                    </SelectItem>
+                    <SelectItem value="Friendly" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Amical
+                    </SelectItem>
+                    <SelectItem value="Confident" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Confiant
+                    </SelectItem>
+                    <SelectItem value="Enthusiastic" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Enthousiaste
+                    </SelectItem>
+                    <SelectItem value="Consultative" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Consultatif
+                    </SelectItem>
+                    <SelectItem value="Direct" className="text-white hover:bg-slate-800 focus:bg-slate-800 focus:text-white">
+                      Direct
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
             <Button 
-              type="submit"
-              disabled={isPending || isOffLimite}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold py-2.5 md:py-3 rounded-xl shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-auto"
-            >
-              {isPending ? (
-                <>
-                  <Clock className="mr-2 h-3 w-3 md:h-4 md:w-4 animate-spin" />
-                  Génération en cours...
-                </>
-              ) : (
-                <>
-                  <Sparkles className="mr-2 h-3 w-3 md:h-4 text-base font-light md:w-4" />
-                  Générer le Script de Cold Calling
-                </>
-              )}
-            </Button>
-            {isOffLimite && (
-              <p className="text-center text-red-400 text-xs">
-                Limite atteinte, veuillez mettre à niveau votre plan
-              </p>
+            type="submit"
+            disabled={isPending || isOffLimite}
+            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white text-sm font-semibold py-2.5 md:py-3 rounded-md shadow-lg transition-all duration-200 hover:shadow-xl hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 mt-auto"
+          >
+            {isPending ? (
+              <>
+                <Clock className="mr-2 h-3 w-3 md:h-4 md:w-4 animate-spin" />
+                Génération en cours...
+              </>
+            ) : (
+              <>
+                <Sparkles className="mr-2 h-3 w-3 md:h-4 text-base font-light md:w-4" />
+                Générer le Script de Cold Calling
+              </>
             )}
-          </form>
-        </CardContent>
-      </Card>
+          </Button>
+          </div>
+
+         
+          {isOffLimite && (
+            <p className="text-center text-red-400 text-xs">
+              Limite atteinte, veuillez mettre à niveau votre plan
+            </p>
+          )}
+        </form>
+      </div>
     </div>
   );
 };

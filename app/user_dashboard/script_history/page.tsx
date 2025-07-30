@@ -13,6 +13,7 @@ const Script_history = async () => {
     CreatedAt: Date;
     userId: string;
     isFavorite: boolean;
+    isClosed: boolean;
   };
 
   const session = await auth.api.getSession({

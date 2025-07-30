@@ -9,7 +9,7 @@ export async function upgradeUserPlan(userId: string, currentPlan: string) {
   else if (currentPlan === "ULTRA") return;
   await prisma.user.update({
     where: { id: userId },
-    data: { plan: nextPlan },
+    data: { plan: nextPlan as any },
   });
   revalidatePath("/user_dashboard/admin_dashboard");
 } 

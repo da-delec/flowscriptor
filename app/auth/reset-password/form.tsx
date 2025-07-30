@@ -26,7 +26,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import LoginButton from '@/components/loginButton'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client' 
@@ -34,59 +33,91 @@ import { unstable_ViewTransition as ViewTransition} from 'react'
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { ShineBorder } from '@/components/magicui/shine-border'
 import { RippleButton } from '@/components/magicui/ripple-button'
+import { MdOutlineEmail } from 'react-icons/md'
 
-const LoginFormSchema = z.object({
- 
-  email: z.string(),
-  password:z.string(),
+const ResetPasswordSchema = z.object({
+  email: z.string().email("Veuillez entrer un email valide"),
 })
  
-export function LoginForm() {
+export function ResetPasswordForm() {
   const [error, setError] = React.useState<string | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isSuccess, setIsSuccess] = React.useState(false);
   const router = useRouter();
-  const form = useForm<z.infer<typeof LoginFormSchema>>({
-    resolver: zodResolver(LoginFormSchema),
+  const form = useForm<z.infer<typeof ResetPasswordSchema>>({
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       email: "",
-      password: "",
     },
   });
 
-  async function onSubmit(values: z.infer<typeof LoginFormSchema>) {
+  async function onSubmit(values: z.infer<typeof ResetPasswordSchema>) {
     setError(null);
     setIsLoading(true);
-    try {
-      await authClient.signIn.email(
-        {
+          try {
+        await authClient.requestPasswordReset({
           email: values.email,
-          password: values.password,
-        },
-        {
-          onSuccess: () => {
-            toast.success("Connexion réussie !");
-            router.push("/user_dashboard");
-          },
-          onError: (error) => {
-            toast.error("Échec de la connexion. Vérifiez vos identifiants.");
-          },
-        }
-      );
+          redirectTo: "/auth/reset-password/create-new",
+        });
+      setIsSuccess(true);
+      toast.success("Email de réinitialisation envoyé !");
     } catch (err) {
-      toast.error("Échec de la connexion. Vérifiez vos identifiants.");
+      console.error("Erreur lors de l'envoi de l'email:", err);
+      toast.error("Erreur lors de l'envoi de l'email. Vérifiez votre adresse email.");
     } finally {
       setIsLoading(false);
     }
+  }
+
+  if (isSuccess) {
+    return (
+      <Card className='overflow-hidden relative bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 text-gray-100 shadow-2xl'>
+        <CardHeader className="pb-6">
+          <CardTitle className='text-2xl font-bold text-center bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent'>
+            Email envoyé !
+          </CardTitle>
+          <CardDescription className='text-center text-slate-400'>
+            Vérifiez votre boîte de réception
+          </CardDescription>
+        </CardHeader>
+        
+        <CardContent className="space-y-6">
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
+              <MdOutlineEmail className="w-8 h-8 text-green-400" />
+            </div>
+            <p className="text-slate-300">
+              Nous avons envoyé un lien de réinitialisation à <strong>{form.getValues("email")}</strong>
+            </p>
+            <p className="text-sm text-slate-400">
+              Cliquez sur le lien dans l'email pour réinitialiser votre mot de passe.
+            </p>
+          </div>
+        </CardContent>
+        
+        <CardFooter className='flex flex-col space-y-4 pt-6'>
+          <RippleButton 
+            className='w-full bg-gradient-to-r from-slate-600 to-slate-700 hover:from-slate-700 hover:to-slate-800 text-white font-medium py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl' 
+            onClick={() => router.push("/auth/sign-in")}
+          >
+            Retour à la connexion
+          </RippleButton>
+        </CardFooter>
+        
+        <BorderBeam size={200} duration={6} />
+        <BorderBeam size={200} delay={3} duration={6} />
+      </Card>
+    );
   }
 
   return (
     <Card className='overflow-hidden relative bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 text-gray-100 shadow-2xl'>
       <CardHeader className="pb-6">
         <CardTitle className='text-2xl font-bold text-center bg-gradient-to-r from-white to-slate-200 bg-clip-text text-transparent'>
-          Connexion
+          Réinitialiser le mot de passe
         </CardTitle>
         <CardDescription className='text-center text-slate-400'>
-          Accédez à votre espace personnel
+          Entrez votre email pour recevoir un lien de réinitialisation
         </CardDescription>
       </CardHeader>
       
@@ -109,6 +140,7 @@ export function LoginForm() {
                     <Input 
                       className='placeholder:text-sm border-slate-600 bg-slate-800/50 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 transition-all duration-200 backdrop-blur-sm' 
                       placeholder="Entrez votre email" 
+                      type="email"
                       {...field} 
                     />
                   </FormControl>
@@ -116,34 +148,6 @@ export function LoginForm() {
                 </FormItem>
               )}
             />
-            
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='text-slate-300 font-medium'>Mot de passe</FormLabel>
-                  <FormControl>
-                    <Input 
-                      type="password"
-                      className='placeholder:text-sm border-slate-600 bg-slate-800/50 placeholder:text-slate-400 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 text-gray-100 transition-all duration-200 backdrop-blur-sm' 
-                      placeholder="Entrez votre mot de passe" 
-                      {...field} 
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            
-            <div className="flex justify-end">
-              <Link 
-                className='text-sm text-indigo-300 hover:text-indigo-200 underline-offset-2 transition-colors duration-200' 
-                href={"/auth/reset-password"}
-              >
-                Mot de passe oublié ?
-              </Link>
-            </div>
             
             <RippleButton 
               className='w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-3 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl' 
@@ -153,10 +157,10 @@ export function LoginForm() {
               {isLoading ? (
                 <div className="flex items-center justify-center">
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
-                  Connexion...
+                  Envoi en cours...
                 </div>
               ) : (
-                "Se connecter"
+                "Envoyer le lien de réinitialisation"
               )}
             </RippleButton>
           </form>
@@ -164,24 +168,13 @@ export function LoginForm() {
       </CardContent>
       
       <CardFooter className='flex flex-col space-y-4 pt-6'>
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-slate-700"></div>
-          </div>
-          <div className="relative flex justify-center text-sm">
-            <span className="px-2 bg-slate-900 text-slate-400">Ou connectez-vous avec</span>
-          </div>
-        </div>
-        
-        <LoginButton />
-        
         <div className="text-center text-sm text-slate-400">
-          Vous n'avez pas de compte ?{" "}
+          Vous vous souvenez de votre mot de passe ?{" "}
           <Link 
             className='text-indigo-300 hover:text-indigo-200 underline underline-offset-2 transition-colors duration-200' 
-            href={"/auth/sign-up"}
+            href={"/auth/sign-in"}
           >
-            Créer un compte
+            Se connecter
           </Link>
         </div>
       </CardFooter>
@@ -190,4 +183,4 @@ export function LoginForm() {
       <BorderBeam size={200} delay={3} duration={6} />
     </Card>
   )
-}
+} 

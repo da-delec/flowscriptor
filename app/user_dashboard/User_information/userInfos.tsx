@@ -31,14 +31,14 @@ type UserInfosProps = {
       isAdmin: boolean | undefined;
       plan: string | undefined;
       scriptGenerated: number | undefined;
-      stripeCustomerId: string;
+      stripeCustomerId: string | undefined;
       id: string;
       name: string;
       emailVerified: boolean;
       email: string;
       createdAt: Date;
       updatedAt: Date;
-      image?: string | null | undefined | undefined;
+      image?: string | null | undefined;
   
   }
 }
@@ -185,7 +185,13 @@ const UserInfos = ({ user }: UserInfosProps) => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
           <Button
             className="bg-slate-800 hover:bg-slate-700 text-slate-100 rounded px-4 py-1.5 text-xs font-medium shadow-sm"
-            onClick={() => handleManageSubscription(user.stripeCustomerId)}
+            onClick={() => {
+              if (user.stripeCustomerId) {
+                handleManageSubscription(user.stripeCustomerId);
+              } else {
+                alert("Aucun ID client Stripe trouvé");
+              }
+            }}
             type="button"
           >
             Gérer mon abonnement

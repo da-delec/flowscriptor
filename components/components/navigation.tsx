@@ -43,7 +43,8 @@ type User = {
   plan: string | undefined;
   isAdmin: boolean | undefined;
   image?: string | null | undefined;
-  scriptGenerated: number;
+  scriptGenerated: number | undefined;
+  stripeCustomerId: string | undefined;
 };
 
 const Navigation = ({ session }: { session: User }) => {
@@ -71,20 +72,21 @@ const Navigation = ({ session }: { session: User }) => {
       id="navbar_dashboard"
       className=" h-[68px] flex justify-between items-center bg-slate-900 text-slate-100 border-slate-700/70  w-screen border-b "
     >
-      <div id="logo" className=" ml-5 h-full flex w-1/5 md:ml-36 items-center">
-        <Image className=" mr-1" alt="logo" src={src} height={40} width={40} />
-        <h1 className=" font-semibold text-slate-50 my-auto text-xl">
-          Callia
+      <div id="logo" className="ml-3  h-full flex w-1/3 md:w-1/5 md:ml-36 items-center">
+        <Image className="mr-1" alt="logo" src={src} height={40} width={40} />
+        <h1 className="font-semibold text-slate-50 my-auto text-lg md:text-xl">
+          FlowScriptor
         </h1>
       </div>
       <div
         id="tablet-menu"
         className=" items-center  flex justify-end h-full w-3/5"
       >
-        <div className="  w-lg flex flex-col justify-center items-end">
-        <Badge className={`${session.plan == "ULTRA" && "bg-green-500/55 border border-green-400/65"} ${session.plan === "STARTER" && "bg-blue-500/55 border border-blue-400/65"} ${session.plan === "FREE" && "bg-gray-500/55 border border-gray-400/65"} relative  border  mr-3`}>{session.plan} <BorderBeam></BorderBeam></Badge>
-        <div className="flex items-center gap-2 mt-1">
-          <p className=" text-xs text-slate-400">{session.scriptGenerated} scripts générés</p>
+        <div className="flex flex-col justify-center items-end mr-2 md:mr-4">
+        <Badge className={`${session.plan == "ULTRA" && "bg-green-500/55 border border-green-400/65"} ${session.plan === "STARTER" && "bg-blue-500/55 border border-blue-400/65"} ${session.plan === "FREE" && "bg-gray-500/55 border border-gray-400/65"} relative border text-xs`}>{session.plan} <BorderBeam></BorderBeam></Badge>
+        <div className="flex items-center gap-1 mt-1">
+          <p className="text-xs text-slate-400 hidden sm:block">{session.scriptGenerated} scripts générés</p>
+          <p className="text-xs text-slate-400 sm:hidden">{session.scriptGenerated}</p>
           <button 
             onClick={handleRefresh}
             className="text-slate-400 hover:text-slate-200 transition-colors p-1 rounded-md hover:bg-slate-800/50"
@@ -104,7 +106,7 @@ const Navigation = ({ session }: { session: User }) => {
             <DropdownMenuItem className="flex cursor-pointer" onClick={() => LogoutUser()}>
               {" "}
               <CiLogout />
-              Logout
+              Déconnexion
             </DropdownMenuItem>
 
             <DropdownMenuItem>
@@ -113,23 +115,18 @@ const Navigation = ({ session }: { session: User }) => {
                 href={"/user_dashboard/User_information"}
               >
                 <MdOutlineAccountCircle className="  mr-2" />
-                Information
+                Informations
               </Link>
             </DropdownMenuItem>
 
-            <DropdownMenuItem asChild>
-              <Link href={"/user_dashboard/objections"}>
-                <MessageSquare className="mr-2" />
-                Gestion des Objections
-              </Link>
-            </DropdownMenuItem>
+           
             
             {user?.isAdmin ?(
             
             <DropdownMenuItem asChild>
                 <Link href={"/user_dashboard/admin_dashboard"}>
                 <RiAdminLine />
-              Admin Dashboard
+              Tableau de Bord Admin
               </Link>
               </DropdownMenuItem>
               ):null}

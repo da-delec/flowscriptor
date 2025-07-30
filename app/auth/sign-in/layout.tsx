@@ -6,7 +6,6 @@ import { unstable_ViewTransition as ViewTransition } from 'react'
 const layout = ({children}:{children:ReactNode}) => {
   return (
     <div>
-        <Image alt='calia-logo' height={60} width={60} src={src} />
         <ViewTransition enter={"slide-in"}>
          
       {children}
