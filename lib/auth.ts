@@ -28,7 +28,7 @@ export const auth = betterAuth({
         },
     },
     emailAndPassword: {
-        enabled: true, // Désactivé pour la nuit
+        enabled: false, // Désactivé pour la nuit
         sendResetPassword: async ({user, url, token}, request) => {
             try {
                 const userMail = user.email;
@@ -52,17 +52,7 @@ export const auth = betterAuth({
             }
         },
     },
-    socialProviders: {
 
-        github: {
-            clientId: process.env.GITHUB_CLIENT_ID as string,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-        },
-        google: {
-            clientId: process.env.GOOGLE_CLIENT_ID as string,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        }
-    },
     plugins: [
         customSession(async ({ user, session }) => {
             const role = await prisma.user.findUnique({
