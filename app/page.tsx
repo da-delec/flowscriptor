@@ -204,6 +204,9 @@ export default function Home() {
       <Features />
       <PricingSection />
       <FinalPart />
+      <div className="font-test text-lg font-bold">
+        Test de la police Satoshi
+      </div>
     </div>
   );
 }

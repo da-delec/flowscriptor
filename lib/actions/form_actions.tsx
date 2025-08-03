@@ -30,7 +30,7 @@ if(scriptGen >= userLimit.scriptLimit) {
     const company = formData.get("company_name")
     const languages = formData.get("language")
     const prompt = `
-    You are a cold-calling expert assistant. Generate a ${languages} cold-call script based on the following:
+    You are a cold-calling expert assistant. Generate a french cold-call script based on the following:
     
     - Caller: ${company}
     - Target: ${targetName}
@@ -40,7 +40,7 @@ if(scriptGen >= userLimit.scriptLimit) {
     - Description: ${description}
     
     Structure the script like a real call: include greeting, intro, value proposition, handling objections, and call to action.
-    The script should be in ${languages} language.
+    The script should be in french language.
     
     IMPORTANT: Return ONLY a valid JSON object with this exact structure:
     {

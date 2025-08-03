@@ -17,10 +17,10 @@ import { useEffect, useState } from "react"
 
 // Navigation links array to be used in both desktop and mobile menus
 const navigationLinks = [
-  { href: "#hero", label: "Home", active: false },
-  { href: "#features", label: "Features", active: false },
-  { href: "#pricing", label: "Pricing", active: false },
-  { href: "#about", label: "About", active: false },
+  { href: "#hero", label: "Accueil", active: false },
+  { href: "#features", label: "Fonctionnalités", active: false },
+  { href: "#pricing", label: "Tarifs", active: false },
+  { href: "#about", label: "À propos", active: false },
 ]
 
 // Fonction pour faire défiler vers une section
@@ -95,14 +95,14 @@ export default function LandingNav() {
                 </svg>
               </Button>
             </PopoverTrigger>
-            <PopoverContent align="start" className="w-36 p-1 md:hidden">
+            <PopoverContent align="start" className="w-48 p-2 md:hidden">
               <NavigationMenu className="max-w-none *:w-full">
                 <NavigationMenuList className="flex-col items-start gap-0 md:gap-2">
                   {navigationLinks.map((link, index) => (
                     <NavigationMenuItem key={index} className="w-full">
                       <NavigationMenuLink
                         onClick={() => scrollToSection(link.href.replace('#', ''))}
-                        className={`py-1.5 cursor-pointer transition-colors ${
+                        className={`py-2 cursor-pointer transition-colors ${
                           activeSection === link.href.replace('#', '') 
                             ? 'text-indigo-400 font-medium' 
                             : 'hover:text-indigo-300'
@@ -113,14 +113,25 @@ export default function LandingNav() {
                       </NavigationMenuLink>
                     </NavigationMenuItem>
                   ))}
+                  {/* Boutons dans le menu mobile */}
+                  <div className="w-full pt-4 border-t border-slate-700 mt-2">
+                    <div className="flex flex-col gap-2">
+                      <Button asChild variant="ghost" size="sm" className="w-full justify-start text-sm">
+                        <Link href={"/auth/sign-in"}>Se connecter</Link>
+                      </Button>
+                      <Button asChild size="sm" className="w-full bg-indigo-500 text-slate-100 text-sm">
+                        <Link href={"/auth/sign-up"}>Commencer</Link>
+                      </Button>
+                    </div>
+                  </div>
                 </NavigationMenuList>
               </NavigationMenu>
             </PopoverContent>
           </Popover>
           {/* Main nav */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
             <Image height={50} width={50} alt="logo" src={Logo}></Image>
-            <h1 className=" pr-3 text-lg font-semibold">FlowScriptor</h1>
+            <h1 className="pr-6 text-lg font-semibold">FlowScriptor</h1>
             {/* Navigation menu */}
             <NavigationMenu className="max-md:hidden">
               <NavigationMenuList className="gap-2">
@@ -143,13 +154,13 @@ export default function LandingNav() {
             </NavigationMenu>
           </div>
         </div>
-        {/* Right side */}
-        <div className="flex items-center gap-2">
+        {/* Right side - Desktop only */}
+        <div className="hidden md:flex items-center gap-2">
           <Button asChild variant="ghost" size="sm" className="text-sm">
-            <Link href={"/auth/sign-in"}>Sign-in</Link>
+            <Link href={"/auth/sign-in"}>Se connecter</Link>
           </Button>
-          <Button asChild size="sm" className=" bg-indigo-500 text-slate-100 text-sm">
-            <Link href={"/auth/sign-up"}>Get Started</Link>
+          <Button asChild size="sm" className="bg-indigo-500 text-slate-100 text-sm">
+            <Link href={"/auth/sign-up"}>Commencer</Link>
           </Button>
         </div>
       </div>
