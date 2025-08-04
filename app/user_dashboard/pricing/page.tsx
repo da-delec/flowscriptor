@@ -58,7 +58,7 @@ const page = () => {
   const plans = [
     {
       name: "Free",
-      price: "$0",
+      price: "0,00€",
       period: "forever",
       description: "Perfect for trying out FlowScriptor",
       badge: "Free",
@@ -79,7 +79,7 @@ const page = () => {
     },
     {
       name: "Starter",
-      price: "$19.99",
+      price: "15.99€",
       period: "per month",
       description: "Perfect for individual sellers",
       badge: "Popular",
@@ -100,7 +100,7 @@ const page = () => {
     },
     {
       name: "Ultra",
-      price: "$39.99",
+      price: "29.99€",
       period: "per month",
       description: "Best for professionals and small teams",
       badge: "Premium",

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useState, useCallback } from 'react'
+import { Skeleton } from '../ui/skeleton'
 import Form from './form'
 import Script_ from './Script'
 import PdfButton from './pdfButton'
@@ -46,7 +47,7 @@ const Form_and_script = () => {
   }, [])
   
   return (
-    <GradientBackground className={STYLES.CONTAINER_PADDING}>
+    <GradientBackground className="p-2 md:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header avec gradient */}
         <GradientHeader 
@@ -55,58 +56,54 @@ const Form_and_script = () => {
         />
 
         {/* Conteneur principal sans card englobante */}
-        <div className="flex flex-col lg:flex-row gap-4 lg:gap-8 mb-6">
+        <div className="flex flex-col lg:flex-row gap-2 lg:gap-6 mb-6">
           {/* Section Formulaire */}
           <div className="flex-1 lg:w-1/2">
-            <div className="flex items-center gap-3 mb-4">
-              <IconContainer icon={Settings} color="indigo" />
-              <h2 className="text-xl font-semibold text-white">Configuration</h2>
-            </div>
-            <div className="h-full ">
+        
+        
+            <div className="h-full">
               <Form setScript={handleResult} />
             </div>
           </div>
           
           {/* Section Script et Objections */}
-          <div className="flex-1  ">
-            <div className="space-y-3 lg:space-y-4">
+          <div className="flex-1">
+            <div className="space-y-2 lg:space-y-3">
               {/* Section Script */}
               <div>
-                <div className="flex items-center gap-3 mb-3 lg:mb-4">
-                  <IconContainer icon={FileText} color="green" />
-                  <h2 className="text-xl font-semibold text-white">Script Généré</h2>
-                </div>
-                <div className="h-full min-h-[250px] md:min-h-[200px] lg:min-h-[300px]">
+              
+              
+                <div className="h-full mt-10 min-h-[200px] md:min-h-[250px]">
                   <Script_ script={script} />
                 </div>
               </div>
 
               {/* Section Objections */}
               <div>
-                <div className="flex items-center  gap-3 mb-3 lg:mb-4">
+                <div className="flex items-center gap-3 mb-3">
                   <IconContainer icon={Shield} color="purple" />
-                  <h2 className="text-xl font-semibold text-white">Réponses aux Objections</h2>
+                  <h2 className="text-lg font-semibold text-white">Réponses aux Objections</h2>
                 </div>
-                <div className="h-full   ">
+                <div className="h-full">
                   {objections.length > 0 ? (
-                    <div className="space-y-2 lg:space-y-3">
+                    <div className="space-y-2">
                       {objections.map((objection, index) => (
-                        <Card key={index} className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 border border-slate-700/30 rounded-xl overflow-hidden">
+                        <Card key={index} className="bg-gradient-to-br from-slate-800/30 to-slate-900/30 border border-slate-700/30 rounded-lg overflow-hidden">
                           <CardHeader className="pb-2">
                             <div className="flex items-center gap-3">
                               <Badge variant="destructive" className="bg-gradient-to-r from-red-600/20 to-orange-600/20 border border-red-500/30 text-red-400">
                                 <AlertTriangle className="w-3 h-3 mr-1" />
                                 Objection {index + 1}
                               </Badge>
-                              <span className="text-slate-400 text-xs lg:text-sm">Réponse préparée</span>
+                              <span className="text-slate-400 text-xs">Réponse préparée</span>
                             </div>
                           </CardHeader>
-                          <CardContent className="space-y-2 lg:space-y-3">
+                          <CardContent className="space-y-2">
                             {/* Objection */}
-                            <div className="space-y-1 lg:space-y-2">
+                            <div className="space-y-1">
                               <div className="flex items-center gap-2">
-                                <MessageSquare className="h-3 w-3 lg:h-4 lg:w-4 text-red-400" />
-                                <h4 className="text-xs lg:text-sm font-semibold text-red-200">Objection :</h4>
+                                <MessageSquare className="h-3 w-3 text-red-400" />
+                                <h4 className="text-xs font-semibold text-red-200">Objection :</h4>
                               </div>
                               <div className="bg-gradient-to-r from-red-900/20 to-orange-900/20 border border-red-500/20 rounded-lg p-2">
                                 <p className="text-slate-200 text-xs italic">
@@ -116,10 +113,10 @@ const Form_and_script = () => {
                             </div>
 
                             {/* Réponse */}
-                            <div className="space-y-1 lg:space-y-2">
+                            <div className="space-y-1">
                               <div className="flex items-center gap-2">
-                                <Shield className="h-3 w-3 lg:h-4 lg:w-4 text-green-400" />
-                                <h4 className="text-xs lg:text-sm font-semibold text-green-200">Votre réponse :</h4>
+                                <Shield className="h-3 w-3 text-green-400" />
+                                <h4 className="text-xs font-semibold text-green-200">Votre réponse :</h4>
                               </div>
                               <div className="bg-gradient-to-r from-green-900/20 to-emerald-900/20 border border-green-500/20 rounded-lg p-2">
                                 <TypingAnimation duration={0.25} className="text-slate-100 text-xs leading-relaxed">
@@ -132,25 +129,15 @@ const Form_and_script = () => {
                       ))}
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center min-h-[200px] w-full">
-                      <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/40 border border-slate-700/50 rounded-xl p-6 text-center max-w-sm">
-                        <div className="p-3 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-4">
-                          <Shield className="h-6 w-6 text-purple-400" />
+                    <div className="flex flex-col items-center justify-center min-h-[150px] w-full">
+                      <div className="bg-gradient-to-br from-slate-800/40 to-slate-900/40 border border-slate-700/50 rounded-lg p-4 text-center max-w-sm">
+                        <div className="p-2 bg-gradient-to-r from-purple-600/20 to-pink-600/20 rounded-full w-10 h-10 flex items-center justify-center mx-auto mb-3">
+                          <Shield className="h-5 w-5 text-purple-400" />
                         </div>
-                        <h3 className="text-base font-semibold text-white mb-2">Aucune objection générée</h3>
-                        <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                        <h3 className="text-sm font-semibold text-white mb-2">Aucune objection générée</h3>
+                        <p className="text-slate-400 text-xs leading-relaxed">
                           Remplissez le formulaire pour générer des réponses aux objections !
                         </p>
-                        <div className="space-y-2">
-                          <div className="flex items-center justify-center gap-2 text-slate-500 text-xs">
-                            <Sparkles className="h-3 w-3" />
-                            <span>Réponses personnalisées</span>
-                          </div>
-                          <div className="flex items-center justify-center gap-2 text-slate-500 text-xs">
-                            <MessageSquare className="h-3 w-3" />
-                            <span>Objections courantes</span>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   )}
@@ -159,9 +146,6 @@ const Form_and_script = () => {
             </div>
           </div>
         </div>
-
-     
-       
       </div>
     </GradientBackground>
   )

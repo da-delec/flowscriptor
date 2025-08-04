@@ -69,6 +69,34 @@ export async function POST(req: Request) {
       }
       break;
     }
+    case 'invoice.payment_failed': {
+      const invoice = event.data.object as any;
+      const customerId = invoice.customer as string;
+      const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId } });
+      if (user) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data: {
+            plan: "FREE"
+          }
+        });
+      }
+      break;
+    }
+    case 'invoice.paid': {
+      const invoice = event.data.object as any;
+      const customerId = invoice.customer as string;
+      const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId } });
+      if (user) {
+        await prisma.user.update({
+          where: { id: user.id },
+          data:{
+            scriptGenerated: 0
+          }
+        });
+      }
+      break;
+    }
     case 'customer.subscription.deleted': {
       const subscription = event.data.object as any;
       const customerId = subscription.customer as string;

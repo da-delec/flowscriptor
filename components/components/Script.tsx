@@ -6,6 +6,8 @@ import { TypingAnimation } from '../magicui/typing-animation';
 import { FaRegSave } from 'react-icons/fa';
 import { Button } from '../ui/button';
 import { Sparkles } from 'lucide-react';
+import Link from 'next/link';
+import { Skeleton } from '../ui/skeleton';
 
 const Script_ = ({ script }: { script: string }) => {
   const isEmpty = !script || script.trim() === '';
@@ -38,9 +40,11 @@ const Script_ = ({ script }: { script: string }) => {
               </p>
               <div className="space-y-3">
                 <p className="text-slate-500 text-sm">Ou utilisez un script template</p>
-                <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white">
+                <Link href="/user_dashboard/script_template">
+                <Button className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 cursor-pointer text-white">
                   Script template
                 </Button>
+                </Link>
               </div>
             </div>
           </div>
@@ -55,12 +59,14 @@ const Script_ = ({ script }: { script: string }) => {
         )}
       </div>
 
-      {/* Zone d'action avec design amélioré */}
-      <div className="w-full flex justify-center mt-6">
-        <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-xl p-2">
-          <DialogDemo scriptprops={script} />
+      {/* Zone d'action avec design amélioré - seulement si script généré */}
+      {!isEmpty && (
+        <div className="w-full flex justify-center mt-6">
+          <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-xl p-2">
+            <DialogDemo scriptprops={script} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

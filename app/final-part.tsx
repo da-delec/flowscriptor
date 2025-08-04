@@ -11,42 +11,16 @@ const FinalPart = () => {
     <div id="about" className="py-20 bg-gradient-to-br from-slate-900 via-slate-950 to-indigo-950">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
         {/* Header with modern gradient */}
-        <div className="text-center mb-16">
-          <div className="bg-gradient-to-r from-indigo-600/10 to-purple-600/10 border border-indigo-500/20 rounded-2xl p-8 mb-8">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
-              Faites partie des premiers à nous rejoindre
+        <div className="text-center mb-12">
+          <div className="bg-gradient-to-r from-indigo-600/10 to-purple-600/10 border border-indigo-500/20 rounded-xl p-6 mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-white mb-3 bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
+              Rejoignez FlowScriptor
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 leading-relaxed max-w-3xl mx-auto">
-              FlowScriptor débute son aventure ! Rejoignez-nous dès maintenant et aidez-nous à construire la meilleure solution de prospection téléphonique assistée par IA. Vos retours et votre expérience comptent énormément pour nous.
+            <p className="text-base md:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+              Nous lançons FlowScriptor et cherchons des commerciaux pour tester et améliorer notre solution. 
+              Votre feedback nous aidera à créer l'outil parfait pour la prospection téléphonique.
             </p>
           </div>
-        </div>
-
-        {/* Stats section */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <Card className="bg-gradient-to-br from-slate-900/90 to-slate-950 border border-slate-800/70 rounded-2xl p-6 text-center">
-            <div className="p-3 bg-gradient-to-r from-blue-600/20 to-indigo-600/20 rounded-xl border border-blue-500/30 mx-auto mb-4 w-fit">
-              <Users className="h-8 w-8 text-blue-400 mx-auto" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">150+</h3>
-            <p className="text-slate-400">Utilisateurs Actifs</p>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-slate-900/90 to-slate-950 border border-slate-800/70 rounded-2xl p-6 text-center">
-            <div className="p-3 bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-xl border border-green-500/30 mx-auto mb-4 w-fit">
-              <TrendingUp className="h-8 w-8 text-green-400 mx-auto" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">85%</h3>
-            <p className="text-slate-400">Taux de Réussite</p>
-          </Card>
-
-          <Card className="bg-gradient-to-br from-slate-900/90 to-slate-950 border border-slate-800/70 rounded-2xl p-6 text-center">
-            <div className="p-3 bg-gradient-to-r from-yellow-600/20 to-orange-600/20 rounded-xl border border-yellow-500/30 mx-auto mb-4 w-fit">
-              <Star className="h-8 w-8 text-yellow-400 mx-auto" />
-            </div>
-            <h3 className="text-2xl font-bold text-white mb-2">4,7/5</h3>
-            <p className="text-slate-400">Note Utilisateurs</p>
-          </Card>
         </div>
 
         {/* Testimonials section */}
