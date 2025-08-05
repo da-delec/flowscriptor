@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://flowscriptor.com/sitemap.xml
+
+# Pages importantes à indexer
+Allow: /auth/sign-in
+Allow: /auth/sign-up
+Allow: /user_dashboard
+Allow: /user_dashboard/script_template
+Allow: /user_dashboard/pricing
+Allow: /conditions-utilisation
+Allow: /politique-confidentialite
+Allow: /mentions-legales
+
+# Pages à ne pas indexer (contenu privé)
+Disallow: /user_dashboard/script_history
+Disallow: /user_dashboard/User_information
+Disallow: /user_dashboard/admin_dashboard
+Disallow: /api/
+Disallow: /_next/
+Disallow: /node_modules/
+
+# Crawl-delay pour éviter de surcharger le serveur
+Crawl-delay: 1 
