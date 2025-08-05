@@ -2,8 +2,6 @@ import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 
-
-
 const getPlanFromPriceId = (priceId: string) => {
   if (priceId === "price_1RmiWmId1XgXGUQOwPPuO1VW") {
     return "STARTER";
@@ -12,6 +10,36 @@ const getPlanFromPriceId = (priceId: string) => {
   }
 }
 
+// Fonction utilitaire pour vérifier si un client Stripe existe
+async function verifyStripeCustomer(customerId: string): Promise<boolean> {
+  try {
+    await stripe.customers.retrieve(customerId);
+    return true;
+  } catch (error: any) {
+    if (error.code === 'resource_missing') {
+      console.log(`Customer ${customerId} not found in Stripe`);
+      return false;
+    }
+    throw error;
+  }
+}
+
+// Fonction utilitaire pour nettoyer les clients Stripe manquants
+async function cleanupMissingStripeCustomer(customerId: string) {
+  try {
+    // Mettre à jour l'utilisateur pour retirer le stripeCustomerId
+    await prisma.user.updateMany({
+      where: { stripeCustomerId: customerId },
+      data: { 
+        stripeCustomerId: "cus_000000000000000000000000",
+        plan: "FREE"
+      }
+    });
+    console.log(`Cleaned up missing Stripe customer: ${customerId}`);
+  } catch (error) {
+    console.error(`Error cleaning up missing Stripe customer ${customerId}:`, error);
+  }
+}
 
 export async function POST(req: Request) {
   const sig = req.headers.get('stripe-signature');
@@ -62,7 +90,7 @@ export async function POST(req: Request) {
             where: { id: user.id },
             data: { plan:plan }
           });
-          console.log("updated plan : ", updatedUser.plan);;
+          console.log("updated plan : ", updatedUser.plan);
         }
       } else {
         console.error("Webhook: metadata manquant ou invalide", session.metadata);
@@ -72,6 +100,14 @@ export async function POST(req: Request) {
     case 'invoice.payment_failed': {
       const invoice = event.data.object as any;
       const customerId = invoice.customer as string;
+      
+      // Vérifier si le client existe dans Stripe
+      const customerExists = await verifyStripeCustomer(customerId);
+      if (!customerExists) {
+        await cleanupMissingStripeCustomer(customerId);
+        break;
+      }
+      
       const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId } });
       if (user) {
         await prisma.user.update({
@@ -86,6 +122,14 @@ export async function POST(req: Request) {
     case 'invoice.paid': {
       const invoice = event.data.object as any;
       const customerId = invoice.customer as string;
+      
+      // Vérifier si le client existe dans Stripe
+      const customerExists = await verifyStripeCustomer(customerId);
+      if (!customerExists) {
+        await cleanupMissingStripeCustomer(customerId);
+        break;
+      }
+      
       const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId } });
       if (user) {
         await prisma.user.update({
@@ -100,6 +144,14 @@ export async function POST(req: Request) {
     case 'customer.subscription.deleted': {
       const subscription = event.data.object as any;
       const customerId = subscription.customer as string;
+      
+      // Vérifier si le client existe dans Stripe
+      const customerExists = await verifyStripeCustomer(customerId);
+      if (!customerExists) {
+        await cleanupMissingStripeCustomer(customerId);
+        break;
+      }
+      
       const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId } });
       if (user) {
         await prisma.user.update({
@@ -114,6 +166,14 @@ export async function POST(req: Request) {
     case 'customer.subscription.updated': {
       const subscription = event.data.object as any;
       const customerId = subscription.customer as string;
+      
+      // Vérifier si le client existe dans Stripe
+      const customerExists = await verifyStripeCustomer(customerId);
+      if (!customerExists) {
+        await cleanupMissingStripeCustomer(customerId);
+        break;
+      }
+      
       const user = await prisma.user.findFirst({ where: { stripeCustomerId: customerId } });
       if (user) {
        const priceId = subscription.items.data[0].price.id;
