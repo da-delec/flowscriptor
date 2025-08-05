@@ -3,8 +3,8 @@ import { stripe } from "@/lib/stripe";
 
 // Remplace par tes vrais price ids Stripe
 const PRICE_IDS = {
-  starter: "prod_SoO7QA1RPaV0Fn",
-  ultra: "prod_SoOCREHfthSN2M"
+  starter: "price_1RslKqEsHmXon7rkh0dZaEiP",
+  ultra: "price_1RslQ7EsHmXon7rkaBFY81sD"
 };
 
 export async function POST(req: Request) {
