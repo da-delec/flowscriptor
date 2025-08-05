@@ -8,6 +8,7 @@ import { upgradeOwnPlan } from '@/lib/actions/upgrade_own_plan';
 import { deleteOwnAccount } from '@/lib/actions/delete_own_account';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { toast } from 'sonner';
 
 const PLAN_LABELS: Record<string, string> = {
   FREE: 'Free Plan',
@@ -82,7 +83,7 @@ const UserInfos = ({ user }: UserInfosProps) => {
       const data = await res.json();
       window.location.href = data.url;
     } else {
-      alert("Erreur lors de la création de la session Stripe.");
+      toast.error("Aucun Abonnement trouvé , Veuillez vous abonner pour accéder à cette fonctionnalité");
     }
   }
 
