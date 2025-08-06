@@ -8,9 +8,7 @@ import resend from "./resend";
 import { NextResponse } from "next/server";
 
 export const auth = betterAuth({
-    baseURL: process.env.NEXTAUTH_URL || (process.env.NODE_ENV === 'production' 
-      ? "https://flowscriptor-ai.vercel.app" 
-      : "http://localhost:3000"),
+    baseURL: process.env.NEXTAUTH_URL || "https://flowscriptor-ai.vercel.app",
     database:prismaAdapter(prisma,{
         provider:"postgresql",
     }),
