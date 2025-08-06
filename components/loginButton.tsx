@@ -58,7 +58,7 @@ const LoginButton = () => {
     }
 
   return (
-    <div className='flex-col flex mt-3 w-full justify-center' id='social-provider'>
+    <div className='flex flex-col justify-center w-full mt-3' id='social-provider'>
       <Button 
         onClick={SignUpGithub} 
         className='w-[90%] text-slate-100 mx-auto my-3 border-slate-700 border bg-slate-800 hover:bg-slate-700 transition-all duration-200'
@@ -66,7 +66,7 @@ const LoginButton = () => {
       >
         {isLoadingGithub ? (
           <div className="flex items-center justify-center">
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+            <div className="w-4 h-4 mr-2 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
             Connexion...
           </div>
         ) : (
@@ -84,7 +84,7 @@ const LoginButton = () => {
       >
         {isLoadingGoogle ? (
           <div className="flex items-center justify-center">
-            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+            <div className="w-4 h-4 mr-2 border-2 border-white rounded-full border-t-transparent animate-spin"></div>
             Connexion...
           </div>
         ) : (
