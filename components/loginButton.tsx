@@ -43,14 +43,6 @@ const LoginButton = () => {
           callbackURL: "/user_dashboard",
           newUserCallbackURL:"/user_dashboard/pricing",
           disableRedirect:true
-        },
-        {
-          onSuccess: () => {
-           toast.success("Connexion réussie")
-          },
-          onError: (error) => {
-            toast.error("Erreur lors de la connexion avec Google")
-          }
         })
       } catch (error) {
         toast.error("Erreur lors de la connexion avec Google")
