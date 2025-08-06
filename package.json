@@ -8,7 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "cleanup-stripe": "node scripts/cleanup-stripe-customers.js"
+    "cleanup-stripe": "node scripts/cleanup-stripe-customers.js",
+    "fix-stripe": "node scripts/fix-stripe-customers.js",
+    "check-stripe": "node scripts/check-stripe-customer.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",

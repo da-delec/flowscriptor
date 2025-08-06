@@ -3,9 +3,9 @@ import { stripe } from '@/lib/stripe';
 import { prisma } from '@/lib/prisma';
 
 const getPlanFromPriceId = (priceId: string) => {
-  if (priceId === "price_1RmiWmId1XgXGUQOwPPuO1VW") {
+  if (priceId === "price_1RslKqEsHmXon7rkh0dZaEiP") {
     return "STARTER";
-  } else if (priceId === "price_1RmidJId1XgXGUQOKayYFpQb") {
+  } else if (priceId === "price_1RslQ7EsHmXon7rkaBFY81sD") {
     return "ULTRA";
   }
 }

@@ -44,11 +44,21 @@ const page = () => {
       } else {
         alert("Erreur lors de la création de la session Stripe.");
       }
+      return; // Arrêter ici pour éviter l'appel à create-checkout
     }
+    
+    // Seulement si l'utilisateur n'est PAS sur le plan STARTER
     const res = await fetch("/api/create-checkout", {
       method: "POST",
       body: JSON.stringify(plan)
     });
+    
+    if (!res.ok) {
+      console.error("Erreur lors de la création du checkout:", res.status, res.statusText);
+      alert("Erreur lors de la création du checkout.");
+      return;
+    }
+    
     const data = await res.json();
     if (data.url) {
       window.location.href = data.url
