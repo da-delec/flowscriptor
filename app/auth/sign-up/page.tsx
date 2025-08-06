@@ -42,16 +42,7 @@ const page = () => {
             <BorderBeam size={250} delay={4} duration={8} />
             
             {/* Beta Message */}
-            <div className="bg-gradient-to-r from-orange-600/20 to-red-600/20 border border-orange-500/30 rounded-lg p-4 mb-6 text-center">
-              <div className="flex items-center justify-center gap-2 mb-2">
-                <div className="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-                <span className="text-orange-300 font-semibold">BETA PRIVÉE</span>
-              </div>
-              <p className="text-orange-200 text-sm">
-                Connexion Google uniquement
-              </p>
-            </div>
-            
+          
             {/* Logo/Title Section */}
             <ProfileForm />
           </div>
