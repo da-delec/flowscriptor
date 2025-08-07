@@ -1,7 +1,25 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { auth } from './lib/auth'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  // Gérer l'authentification avec Better Auth
+  const session = await auth.api.getSession({
+    headers: request.headers
+  })
+
+  // Routes protégées qui nécessitent une authentification
+  const protectedRoutes = ['/user_dashboard']
+  const isProtectedRoute = protectedRoutes.some(route => 
+    request.nextUrl.pathname.startsWith(route)
+  )
+
+  // Si c'est une route protégée et qu'il n'y a pas de session, rediriger vers sign-in
+  if (isProtectedRoute && !session?.user) {
+    const signInUrl = new URL('/auth/sign-in', request.url)
+    return NextResponse.redirect(signInUrl)
+  }
+
   // Gérer CORS pour les requêtes API
   if (request.nextUrl.pathname.startsWith('/api/')) {
     const response = NextResponse.next()
@@ -25,5 +43,7 @@ export function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     '/api/:path*',
+    '/user_dashboard/:path*',
+    '/auth/:path*'
   ],
 } 
