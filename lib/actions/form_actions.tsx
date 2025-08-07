@@ -46,12 +46,14 @@ if(scriptGen >= userLimit.scriptLimit) {
     - Objectif de l'appel : ${callObjective}
     - Ton souhaité : ${tone}
    
-    
+    IMPORTANT : Adapte ton approche selon le type de prospect :
+    - Si l'entreprise du prospect est renseignée : approche B2B/professionnelle
+    - Si l'entreprise du prospect est vide ou "particulier" : approche B2C/particulier
     
     Crée un script réaliste et structuré qui inclut :
     1. Salutation et présentation
     2. Introduction et contexte
-    3. Proposition de valeur adaptée au prospect
+    3. Proposition de valeur adaptée au prospect (B2B ou B2C)
     4. Gestion des objections courantes
     5. Call-to-action clair
     
@@ -76,7 +78,9 @@ if(scriptGen >= userLimit.scriptLimit) {
       ]
     }
     
-    Les objections doivent être spécifiques au produit/service (${productName}) et au secteur d'activité (${industry}). 
+    Les objections doivent être spécifiques au produit/service (${productName}) et adaptées au type de prospect :
+    - Pour un prospect B2B : objections liées au budget, aux processus d'achat, à la concurrence, à l'implémentation
+    - Pour un prospect B2C : objections liées au prix, au besoin, à la confiance, à la concurrence
     Adapte les objections et réponses au contexte réel de ce que tu vends et à qui tu le vends.
     
     Assure-toi que toutes les guillemets sont correctement fermés et que le JSON est valide.
