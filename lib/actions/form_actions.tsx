@@ -62,19 +62,22 @@ if(scriptGen >= userLimit.scriptLimit) {
       "script": "Ton script commercial complet ici...",
       "objections": [
         {
-          "objection": "C'est trop cher",
-          "response": "Je comprends que le budget soit une préoccupation. Beaucoup de nos clients pensaient la même chose avant de voir combien de temps et d'argent ils économisaient avec notre solution."
+          "objection": "Objection spécifique au produit/secteur",
+          "response": "Réponse personnalisée adaptée au contexte"
         },
         {
-          "objection": "J'utilise déjà une autre solution",
-          "response": "C'est tout à fait compréhensible. Nombre de nos clients ont fait la transition après avoir réalisé comment nous optimisons leur flux de travail et améliorons la collaboration d'équipe."
+          "objection": "Objection spécifique au produit/secteur", 
+          "response": "Réponse personnalisée adaptée au contexte"
         },
         {
-          "objection": "Je n'ai pas le temps de mettre ça en place maintenant",
-          "response": "Je comprends. La bonne nouvelle, c'est que notre intégration prend moins d'une heure et nous fournissons un support complet pour que tout se passe en douceur."
+          "objection": "Objection spécifique au produit/secteur",
+          "response": "Réponse personnalisée adaptée au contexte"
         }
       ]
     }
+    
+    Les objections doivent être spécifiques au produit/service (${productName}) et au secteur d'activité (${industry}). 
+    Adapte les objections et réponses au contexte réel de ce que tu vends et à qui tu le vends.
     
     Assure-toi que toutes les guillemets sont correctement fermés et que le JSON est valide.
 `
