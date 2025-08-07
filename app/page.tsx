@@ -142,6 +142,32 @@ export default function Home() {
       </div>
       
       <Features />
+      
+      {/* Section Vidéo de démo */}
+      <section className="py-16 px-4 md:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+              Voir FlowScriptor en action
+            </h2>
+            <p className="text-lg text-slate-300 max-w-2xl mx-auto">
+              Découvrez comment FlowScriptor génère des scripts personnalisés en quelques secondes
+            </p>
+          </div>
+          
+          <div className="bg-gradient-to-br from-slate-900/90 to-slate-950 border border-slate-800/70 rounded-2xl p-6 md:p-8 shadow-2xl">
+            <div style={{ position: "relative", paddingBottom: "56.25%", height: 0 }}>
+              <iframe 
+                src="https://www.loom.com/embed/d83cebd60366461aaa0153f82db2cd26?sid=9504c76f-bed7-41ce-8ca5-356af21b9cf2" 
+                frameBorder="0" 
+                allowFullScreen 
+                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      
       <PricingSection />
       <FinalPart />
       
