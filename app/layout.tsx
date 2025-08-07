@@ -36,12 +36,13 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <head>
+      <meta name="google-site-verification" content="SZt0VR9BWuCEfw2KJ6tSnJV97u17l4fOIAzp188XoeI" />
         <link rel="icon" type="image/png" sizes="64x64" href="/faviconFinal.png" />
         <link rel="shortcut icon" href="/faviconFinal.png" />
         <link rel="apple-touch-icon" href="/faviconFinal.png" />
       </head>
       <body
-        className="bg-slate-950 font-sans antialiased"
+        className="font-sans antialiased bg-slate-950"
         style={{
           fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'
         }}

@@ -3,7 +3,7 @@
   
   <!-- Pages principales -->
   <url>
-    <loc>https://flowscriptor.com/</loc>
+    <loc>https://flowscriptor-ai.vercel.app/</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -11,21 +11,21 @@
 
   <!-- Pages d'authentification -->
   <url>
-    <loc>https://flowscriptor.com/auth/sign-in</loc>
+    <loc>https://flowscriptor-ai.vercel.app/auth/sign-in</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/auth/sign-up</loc>
+    <loc>https://flowscriptor-ai.vercel.app/auth/sign-up</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/auth/reset-password</loc>
+    <loc>https://flowscriptor-ai.vercel.app/auth/reset-password</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -33,49 +33,49 @@
 
   <!-- Dashboard utilisateur (pages protégées mais importantes pour SEO) -->
   <url>
-    <loc>https://flowscriptor.com/user_dashboard</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/user_dashboard/script_template</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard/script_template</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/user_dashboard/objections</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard/objections</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/user_dashboard/script_history</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard/script_history</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/user_dashboard/pricing</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard/pricing</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/user_dashboard/User_information</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard/User_information</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/user_dashboard/joinUs</loc>
+    <loc>https://flowscriptor-ai.vercel.app/user_dashboard/joinUs</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -83,21 +83,21 @@
 
   <!-- Pages légales -->
   <url>
-    <loc>https://flowscriptor.com/conditions-utilisation</loc>
+    <loc>https://flowscriptor-ai.vercel.app/conditions-utilisation</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/politique-confidentialite</loc>
+    <loc>https://flowscriptor-ai.vercel.app/politique-confidentialite</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/mentions-legales</loc>
+    <loc>https://flowscriptor-ai.vercel.app/mentions-legales</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.4</priority>
@@ -105,49 +105,49 @@
 
   <!-- Pages API (pour référence) -->
   <url>
-    <loc>https://flowscriptor.com/api/auth</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/auth</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/api/contact</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/contact</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/api/create-checkout</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/create-checkout</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/api/stripe</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/stripe</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/api/stripePortal</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/stripePortal</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/api/update-profile</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/update-profile</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://flowscriptor.com/api/get_user_script</loc>
+    <loc>https://flowscriptor-ai.vercel.app/api/get_user_script</loc>
     <lastmod>2024-12-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
