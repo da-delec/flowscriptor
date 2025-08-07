@@ -112,9 +112,9 @@ export const auth = betterAuth({
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
         },
         google: {
-            clientId: process.env.GOOGLE_CLIENT_ID! as string,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET! as string,
-            disableRedirect: false, // Permettre la redirection automatique
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+             // Permettre la redirection automatique
         }
     },
 
