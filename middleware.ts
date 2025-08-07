@@ -1,23 +1,18 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { auth } from './lib/auth'
 
 export async function middleware(request: NextRequest) {
-  // Gérer l'authentification avec Better Auth
-  const session = await auth.api.getSession({
-    headers: request.headers
-  })
-
   // Routes protégées qui nécessitent une authentification
   const protectedRoutes = ['/user_dashboard']
   const isProtectedRoute = protectedRoutes.some(route => 
     request.nextUrl.pathname.startsWith(route)
   )
 
-  // Si c'est une route protégée et qu'il n'y a pas de session, rediriger vers sign-in
-  if (isProtectedRoute && !session?.user) {
-    const signInUrl = new URL('/auth/sign-in', request.url)
-    return NextResponse.redirect(signInUrl)
+  // Pour les routes protégées, on laisse le layout gérer l'authentification
+  // car le middleware ne peut pas utiliser Prisma côté client
+  if (isProtectedRoute) {
+    // On laisse passer la requête, le layout vérifiera la session
+    return NextResponse.next()
   }
 
   // Gérer CORS pour les requêtes API
