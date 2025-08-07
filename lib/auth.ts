@@ -7,8 +7,15 @@ import { stripe } from "./stripe";
 import resend from "./resend";
 import { NextResponse } from "next/server";
 
+// Debug: Vérifier les variables d'environnement
+console.log("🔍 Auth Configuration Debug:");
+console.log("GOOGLE_CLIENT_ID:", process.env.GOOGLE_CLIENT_ID ? "✅ Configuré" : "❌ Manquant");
+console.log("GOOGLE_CLIENT_SECRET:", process.env.GOOGLE_CLIENT_SECRET ? "✅ Configuré" : "❌ Manquant");
+console.log("GITHUB_CLIENT_ID:", process.env.GITHUB_CLIENT_ID ? "✅ Configuré" : "❌ Manquant");
+console.log("GITHUB_CLIENT_SECRET:", process.env.GITHUB_CLIENT_SECRET ? "✅ Configuré" : "❌ Manquant");
+
 export const auth = betterAuth({
-    baseURL: process.env.NEXTAUTH_URL || "https://flowscriptor-ai.vercel.app",
+
     database:prismaAdapter(prisma,{
         provider:"postgresql",
     }),
@@ -100,7 +107,6 @@ export const auth = betterAuth({
     }, 
     
     socialProviders: {
-
         github: {
             clientId: process.env.GITHUB_CLIENT_ID as string,
             clientSecret: process.env.GITHUB_CLIENT_SECRET as string,

@@ -40,11 +40,19 @@ const LoginButton = () => {
       try {
         await authClient.signIn.social({
           provider: "google",
-          callbackURL: "/user_dashboard",
-          newUserCallbackURL:"/user_dashboard/pricing",
-          disableRedirect:true
+          callbackURL: "/user_dashboard"
+        },
+        {
+          onSuccess: () => {
+            router.push("/user_dashboard")
+          },
+          onError: (error) => {
+            console.error("Erreur Google:", error)
+            toast.error("Erreur lors de la connexion avec Google")
+          }
         })
       } catch (error) {
+        console.error("Erreur Google:", error)
         toast.error("Erreur lors de la connexion avec Google")
       } finally {
         setIsLoadingGoogle(false)
