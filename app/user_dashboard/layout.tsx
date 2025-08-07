@@ -11,12 +11,7 @@ const layout = async ({ children }: { children: ReactNode }) => {
     headers: await headers()
   })
 
-  console.log("🔍 Dashboard Layout - Session:", {
-    hasSession: !!session,
-    hasUser: !!session?.user,
-    userId: session?.user?.id,
-    email: session?.user?.email
-  });
+
 
   if(!session?.user){
     console.log("❌ Pas de session utilisateur, redirection vers sign-in");
