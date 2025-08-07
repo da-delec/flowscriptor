@@ -17,16 +17,7 @@ const LoginButton = () => {
       setIsLoadingGithub(true)
       try {
         await authClient.signIn.social({
-          provider: "github",
-          callbackURL: "/user_dashboard"
-        },
-        {
-          onSuccess: () => {
-            router.push("/user_dashboard")
-          },
-          onError: (error) => {
-            toast.error("Erreur lors de la connexion avec GitHub")
-          }
+          provider: "github"
         })
       } catch (error) {
         toast.error("Erreur lors de la connexion avec GitHub")
@@ -39,10 +30,8 @@ const LoginButton = () => {
       setIsLoadingGoogle(true)
       try {
         await authClient.signIn.social({
-          provider: "google",
-          callbackURL: "/user_dashboard"
-        },
-        {
+          provider: "google"
+        },{
           onSuccess: () => {
             router.push("/user_dashboard")
           },
