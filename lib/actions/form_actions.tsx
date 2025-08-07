@@ -22,46 +22,61 @@ if(scriptGen >= userLimit.scriptLimit) {
 }
 
 
-    const description = formData.get("description")
-    const prospectType = formData.get("prospect-type")
-    const targetName = formData.get("enterpriseName")
-    const callGoal = formData.get("selected-goal")
-    const tone = formData.get("tone")
-    const company = formData.get("company_name")
-    const languages = formData.get("language")
+    // Récupération des données du formulaire avec les bons noms de champs
+    const ourName = formData.get("ourName") as string
+    const ourCompany = formData.get("company_name") as string
+    const prospectName = formData.get("prospectName") as string
+    const prospectCompany = formData.get("enterpriseName") as string
+    const industry = formData.get("prospect-type") as string
+    const productName = formData.get("productName") as string
+    const productDescription = formData.get("description") as string
+    const callObjective = formData.get("selected-goal") as string
+    const tone = formData.get("tone") as string
+   
     const prompt = `
-    You are a cold-calling expert assistant. Generate a french cold-call script based on the following:
+    Tu es un expert en cold-calling. Génère un script d'appel commercial en français basé sur les informations suivantes :
     
-    - Caller: ${company}
-    - Target: ${targetName}
-    - Prospect Type: ${prospectType}
-    - Call Goal: ${callGoal}
-    - Tone: ${tone}
-    - Description: ${description}
+    - Notre nom : ${ourName}
+    - Notre entreprise : ${ourCompany}
+    - Nom du prospect : ${prospectName}
+    - Entreprise du prospect : ${prospectCompany}
+    - Secteur d'activité : ${industry}
+    - Produit/Service : ${productName}
+    - Description du produit : ${productDescription}
+    - Objectif de l'appel : ${callObjective}
+    - Ton souhaité : ${tone}
+   
     
-    Structure the script like a real call: include greeting, intro, value proposition, handling objections, and call to action.
-    The script should be in french language.
     
-    IMPORTANT: Return ONLY a valid JSON object with this exact structure:
+    Crée un script réaliste et structuré qui inclut :
+    1. Salutation et présentation
+    2. Introduction et contexte
+    3. Proposition de valeur adaptée au prospect
+    4. Gestion des objections courantes
+    5. Call-to-action clair
+    
+    Le script doit être naturel, adapté au ton demandé et utiliser toutes les informations fournies pour personnaliser l'approche.
+    
+    IMPORTANT : Retourne UNIQUEMENT un objet JSON valide avec cette structure exacte :
     {
-      "script": "Your complete sales script here...",
+      "script": "Ton script commercial complet ici...",
       "objections": [
         {
-          "objection": "It's too expensive",
-          "response": "I understand that budget is a concern. Many of our clients felt the same way before seeing how much time and money they saved after using our tool."
+          "objection": "C'est trop cher",
+          "response": "Je comprends que le budget soit une préoccupation. Beaucoup de nos clients pensaient la même chose avant de voir combien de temps et d'argent ils économisaient avec notre solution."
         },
         {
-          "objection": "I'm already using another solution",
-          "response": "Totally understandable. Many of our customers switched after realizing how we streamline their workflow and improve team collaboration."
+          "objection": "J'utilise déjà une autre solution",
+          "response": "C'est tout à fait compréhensible. Nombre de nos clients ont fait la transition après avoir réalisé comment nous optimisons leur flux de travail et améliorons la collaboration d'équipe."
         },
         {
-          "objection": "I don't have time to implement this right now",
-          "response": "That makes sense. The good news is that our onboarding takes less than an hour, and we provide full support to make it as smooth as possible."
+          "objection": "Je n'ai pas le temps de mettre ça en place maintenant",
+          "response": "Je comprends. La bonne nouvelle, c'est que notre intégration prend moins d'une heure et nous fournissons un support complet pour que tout se passe en douceur."
         }
       ]
     }
     
-    Make sure all quotes are properly closed and the JSON is valid.
+    Assure-toi que toutes les guillemets sont correctement fermés et que le JSON est valide.
 `
     ; 
        const completion = await openai.chat.completions.create({

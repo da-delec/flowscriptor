@@ -60,12 +60,15 @@ const Form = ({
 
   function handleSubmit(formDataEvent: FormData) {
     // Mapping vers les noms attendus par la server action
+    formDataEvent.set("ourName", formData.ourName);
     formDataEvent.set("company_name", formData.ourCompany);
-    formDataEvent.set("prospect-type", formData.industry);
+    formDataEvent.set("prospectName", formData.prospectName);
     formDataEvent.set("enterpriseName", formData.prospectCompany);
+    formDataEvent.set("prospect-type", formData.industry);
+    formDataEvent.set("productName", formData.productName);
+    formDataEvent.set("description", formData.productDescription);
     formDataEvent.set("selected-goal", formData.callObjective);
     formDataEvent.set("tone", formData.tone);
-    formDataEvent.set("description", formData.productDescription);
     formDataEvent.set("language", "French");
     
     // Utiliser startTransition pour déclencher l'animation

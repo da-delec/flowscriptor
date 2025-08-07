@@ -5,16 +5,21 @@ import { Toaster } from "@/components/ui/sonner"
 export const metadata: Metadata = {
   title: "FlowScriptor - Générateur de Scripts de Cold Calling",
   description: "Créez des scripts de cold calling personnalisés avec l'IA. Générez instantanément des scripts optimisés pour maximiser vos conversions.",
-  keywords: ["cold calling", "scripts", "vente", "IA", "générateur", "sales"],
+  keywords: ["cold calling", "scripts", "vente", "IA", "générateur", "sales", "prospection téléphonique", "script commercial", "vente téléphonique"],
   authors: [{ name: "FlowScriptor" }],
   creator: "FlowScriptor",
   publisher: "FlowScriptor",
   robots: "index, follow",
+  verification: {
+    google: "votre-code-verification-google", // Remplacez par votre code Google
+  },
   openGraph: {
     title: "FlowScriptor - Générateur de Scripts de Cold Calling",
     description: "Créez des scripts de cold calling personnalisés avec l'IA",
     type: "website",
     locale: "fr_FR",
+    url: "https://flowscriptor-ai.vercel.app",
+    siteName: "FlowScriptor",
   },
   twitter: {
     card: "summary_large_image",
