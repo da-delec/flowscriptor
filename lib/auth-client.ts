@@ -1,6 +1,6 @@
 import { createAuthClient } from "better-auth/react"
 
 export const authClient = createAuthClient({
-  baseURL:"https://flowscriptor-ai.vercel.app"
+  baseURL:"https://flowscriptor.com"
    
 })
