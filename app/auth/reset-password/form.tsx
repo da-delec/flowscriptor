@@ -29,7 +29,6 @@ import { Input } from "@/components/ui/input"
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { authClient } from '@/lib/auth-client' 
-import { unstable_ViewTransition as ViewTransition} from 'react'
 import { BorderBeam } from '@/components/magicui/border-beam'
 import { ShineBorder } from '@/components/magicui/shine-border'
 import { RippleButton } from '@/components/magicui/ripple-button'
